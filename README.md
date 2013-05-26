@@ -1,6 +1,6 @@
 # TextRazor
 
-TODO: Write a gem description
+This is a gem wrapper for TextRazor REST API reference.
 
 ## Installation
 
@@ -18,7 +18,16 @@ Or install it yourself as:
 
 ## Usage
 
-TODO: Write usage instructions here
+```
+
+client = TextRazor::Client.new('api_key', {extractors: [], cleanup_html:
+false, filter_dbpedia_types: [], filter_freebase_types: []})
+
+response = client.analyse('text to be analysed')
+
+response.topics # Returns an array of TextRazor::Topic instances.
+
+```
 
 ## Contributing
 
