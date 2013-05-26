@@ -8,8 +8,8 @@ Gem::Specification.new do |spec|
   spec.version       = TextRazor::VERSION
   spec.authors       = ["Anuj Dutta"]
   spec.email         = ["anuj@andhapp.com"]
-  spec.description   = %q{TODO: Write a gem description}
-  spec.summary       = %q{TODO: Write a gem summary}
+  spec.description   = %q{Api wrapper for text razor}
+  spec.summary       = %q{An api wrapper for text razor in ruby}
   spec.homepage      = ""
   spec.license       = "MIT"
 
@@ -20,4 +20,5 @@ Gem::Specification.new do |spec|
 
   spec.add_development_dependency "bundler", "~> 1.3"
   spec.add_development_dependency "rake"
+  spec.add_development_dependency "rspec"
 end
