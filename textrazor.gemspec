@@ -4,7 +4,7 @@ $LOAD_PATH.unshift(lib) unless $LOAD_PATH.include?(lib)
 require 'textrazor/version'
 
 Gem::Specification.new do |spec|
-  spec.name          = "text_razor"
+  spec.name          = "textrazor"
   spec.version       = TextRazor::VERSION
   spec.authors       = ["Anuj Dutta"]
   spec.email         = ["anuj@andhapp.com"]
