@@ -1,5 +1,3 @@
 require "text_razor/version"
-
-module TextRazor
-  # Your code goes here...
-end
+require "text_razor/client"
+require "text_razor/errors"
