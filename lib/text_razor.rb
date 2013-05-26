@@ -1,5 +1,0 @@
-require "text_razor/version"
-require "text_razor/client"
-require "text_razor/request"
-require "text_razor/response"
-require "text_razor/topic"

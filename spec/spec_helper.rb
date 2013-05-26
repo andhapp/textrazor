@@ -1,4 +1,4 @@
 require "bundler"
 Bundler.require
 
-require File.expand_path("../../lib/text_razor" ,__FILE__)
+require File.expand_path("../../lib/textrazor" ,__FILE__)
