@@ -18,6 +18,8 @@ Or install it yourself as:
 
 ## Usage
 
+### When the client is persisted across different requests
+
 ```
 
 client = TextRazor::Client.new('api_key', {extractors: [], cleanup_html:
@@ -28,6 +30,23 @@ response = client.analyse('text to be analysed')
 response.topics # Returns an array of TextRazor::Topic instances.
 
 ```
+
+### One off requests
+
+For making one off request to retrieve topics, you can use the following
+handy method. A new client is instantiated and discarded everytime you 
+make this request.
+
+```
+TextRazor.topics('api_key', 'text')
+
+```
+
+## Next steps
+
+Only implemented this for topics. Also, implement it for other
+information that we can retrieve from the public API.
+
 
 ## Contributing
 

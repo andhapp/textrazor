@@ -20,6 +20,12 @@ module TextRazor
       Response.new(Request.post(text, options))
     end
 
+    def self.topics(api_key, text, options = {})
+      new(api_key, options.merge(extractors: ['topics'])).
+        analyse(text).
+        topics
+    end
+
     private
 
     def assign_api_key(api_key)
