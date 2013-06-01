@@ -6,6 +6,9 @@ module TextRazor
     EmptyText = Class.new(StandardError)
     TextTooLong = Class.new(StandardError)
 
+    DefaultExtractors = ["entities", "topics", "words", "dependency-trees",
+                          "relations", "entailments"]
+
     attr_reader :response, :api_key, :request_options
 
     def initialize(api_key, options = {})
@@ -38,10 +41,10 @@ module TextRazor
 
     def assign_request_options(options)
       @request_options = {}
-      @request_options[:extractors] = options[:extractors] || Defaults::Extractors
-      @request_options[:cleanup_html] = options[:cleanup_html] || Defaults::CleanupHtml
-      @request_options[:filter_dbpedia_types] = options[:filter_dbpedia_types] || Defaults::FilterDbpediaTypes
-      @request_options[:filter_freebase_types] = options[:filter_freebase_types] || Defaults::FilterFreebaseTypes
+      @request_options[:extractors] = options[:extractors] || DefaultExtractors
+      @request_options[:cleanup_html] = options[:cleanup_html] if options[:cleanup_html]
+      @request_options[:filter_dbpedia_types] = options[:filter_dbpedia_types] if options[:filter_dbpedia_types]
+      @request_options[:filter_freebase_types] = options[:filter_freebase_types] if options[:filter_freebase_types]
     end
 
     def assert_text(text)
@@ -56,13 +59,6 @@ module TextRazor
 
     def is_text_bigger_than_200_kb?(text)
       text.bytesize/1024.0 > 200
-    end
-
-    class Defaults
-      Extractors = ["entities", "topics", "words", "dependency-trees", "relations", "entailments"]
-      CleanupHtml = false
-      FilterDbpediaTypes = []
-      FilterFreebaseTypes = []
     end
 
   end

@@ -8,6 +8,8 @@ module TextRazor
       ::RestClient.post "http://api.textrazor.com/", build_query(text, options), accept_encoding: 'gzip'
     end
 
+    private
+
     def self.build_query(text, options)
       {"text" => text, "apiKey" => options[:api_key], "extractors" => options[:extractors].join(","),
        "cleanupHTML" => options[:cleanup_html], "entities.filterDbpediaTypes" => options[:filter_dbpedia_types].join(","),

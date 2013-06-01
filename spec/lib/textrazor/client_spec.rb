@@ -20,8 +20,7 @@ module TextRazor
         it "should assign correct api_key, text and default options" do
           expect(default_options_client.api_key).to eq(api_key)
           expect(default_options_client.request_options).
-            to eq({extractors: %w(entities topics words dependency-trees relations entailments),
-                 cleanup_html: false, filter_dbpedia_types: [], filter_freebase_types: []})
+            to eq({extractors: %w(entities topics words dependency-trees relations entailments)})
         end
 
         it "should assign correct api_key, text and passed in options" do
