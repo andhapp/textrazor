@@ -22,8 +22,7 @@ Or install it yourself as:
 
 ```
 
-client = TextRazor::Client.new('api_key', {extractors: [], cleanup_html:
-false, filter_dbpedia_types: [], filter_freebase_types: []})
+client = TextRazor::Client.new('api_key')
 
 response = client.analyse('text to be analysed')
 
