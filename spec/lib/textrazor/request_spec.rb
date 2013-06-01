@@ -43,12 +43,3 @@ module TextRazor
   end
 
 end
-
-#curl -X POST \
-  #-d "apiKey=11b3780617dbbc8dcfb481449b2b158ab516cffc3d905d9a95618b3c" \
-  #-d "extractors=topics" \
-  #-d "text=Spain's stricken Bankia expects to sell off its vast portfolio of industrial holdings that includes a stake in the parent company of British Airways and Iberia." \
-  #http://api.textrazor.com/
-#
-#
-
