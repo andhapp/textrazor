@@ -28,6 +28,8 @@ response = client.analyse('text to be analysed')
 
 response.topics # Returns an array of TextRazor::Topic instances.
 
+response.entities # Returns an array of TextRazor::Entity instances.
+
 ```
 
 ### One off requests
@@ -39,11 +41,13 @@ make this request.
 ```
 TextRazor.topics('api_key', 'text')
 
+TextRazor.entities('api_key', 'text')
+
 ```
 
 ## Next steps
 
-Only implemented this for topics. Also, implement it for other
+Only implemented this for topics, and entities. Also, implement it for other
 information that we can retrieve from the public API.
 
 
