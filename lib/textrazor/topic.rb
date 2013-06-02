@@ -11,6 +11,10 @@ module TextRazor
       @score = score
     end
 
+    def self.create_from_hash(params)
+      new(params["id"], params["label"], params["wikiLink"], params["score"])
+    end
+
   end
 
 end

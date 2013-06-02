@@ -137,6 +137,25 @@ module TextRazor
 
     end
 
+    context ".entities" do
+
+      it "should make correct calls" do
+        client = OpenStruct.new
+        response = OpenStruct.new entities: ['Entity1']
+
+        Client.should_receive(:new).
+          with(api_key, {extractors: ['entities']}).
+          and_return(client)
+
+        client.should_receive(:analyse).
+          with("text").
+          and_return(response)
+
+        Client.entities(api_key, 'text', {})
+      end
+
+    end
+
   end
 
 end

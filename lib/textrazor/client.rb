@@ -29,6 +29,12 @@ module TextRazor
         topics
     end
 
+    def self.entities(api_key, text, options = {})
+      new(api_key, options.merge(extractors: ['entities'])).
+        analyse(text).
+        entities
+    end
+
     private
 
     def assign_api_key(api_key)

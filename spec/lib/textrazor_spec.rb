@@ -13,4 +13,15 @@ describe TextRazor do
 
   end
 
+  context ".entities" do
+
+    it "should make correct calls" do
+      TextRazor::Client.should_receive(:entities).
+        with('api_key', 'text', {})
+
+      TextRazor.entities('api_key', 'text', {})
+    end
+
+  end
+
 end

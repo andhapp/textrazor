@@ -11,9 +11,19 @@ module TextRazor
     private
 
     def self.build_query(text, options)
-      {"text" => text, "apiKey" => options[:api_key], "extractors" => options[:extractors].join(","),
-       "cleanupHTML" => options[:cleanup_html], "entities.filterDbpediaTypes" => options[:filter_dbpedia_types].join(","),
-       "entities.filterFreebaseTypes" => options[:filter_freebase_types].join(",")}
+      query = {"text" => text, "apiKey" => options.delete(:api_key)}
+
+      options.each do |key, value|
+        value = value.join(",") if value.is_a?(Array)
+
+        key = "cleanupHTML" if key == :cleanup_html
+        key = "entities.filterDbpediaTypes" if key == :filter_dbpedia_types
+        key = "entities.filterFreebaseTypes" if key == :filter_freebase_types
+
+        query.merge!(key.to_s => value)
+      end
+
+      query
     end
 
   end

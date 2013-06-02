@@ -22,9 +22,23 @@ module TextRazor
     end
 
     def topics
+      raw_topics = raw_response["topics"]
+      return nil if raw_topics.nil?
+
       @topics ||= begin
-         raw_response["topics"].map do |topic_hash|
-           Topic.new(topic_hash["id"], topic_hash["label"], topic_hash["wikiLink"], topic_hash["score"])
+         raw_topics.map do |topic_hash|
+           Topic.create_from_hash(topic_hash)
+         end
+      end
+    end
+
+    def entities
+      raw_entities = raw_response["entities"]
+      return nil if raw_entities.nil?
+
+      @entities ||= begin
+         raw_entities.map do |entity_hash|
+           Entity.create_from_hash(entity_hash)
          end
       end
     end

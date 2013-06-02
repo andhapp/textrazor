@@ -9,13 +9,11 @@ module TextRazor
       context "default options" do
 
         it "should make correct calls" do
-          options = {api_key: 'api_key', extractors: %w(entities topics words dependency-trees relations entailments),
-                     cleanup_html: false, filter_dbpedia_types: [], filter_freebase_types: []}
+          options = {api_key: 'api_key', extractors: %w(entities topics words dependency-trees relations entailments)}
 
           ::RestClient.should_receive(:post).
-            with("http://api.textrazor.com/", { "text" => 'text', "apiKey" => 'api_key', "cleanupHTML" => false,
-            "extractors" => "entities,topics,words,dependency-trees,relations,entailments", "entities.filterDbpediaTypes" => "",
-            "entities.filterFreebaseTypes" => ""}, accept_encoding: 'gzip')
+            with("http://api.textrazor.com/", { "text" => 'text', "apiKey" => 'api_key',
+            "extractors" => "entities,topics,words,dependency-trees,relations,entailments" }, accept_encoding: 'gzip')
 
           Request.post('text', options)
         end
