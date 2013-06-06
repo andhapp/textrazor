@@ -26,9 +26,9 @@ module TextRazor
       return nil if raw_topics.nil?
 
       @topics ||= begin
-         raw_topics.map do |topic_hash|
-           Topic.create_from_hash(topic_hash)
-         end
+        raw_topics.map do |topic_hash|
+          Topic.create_from_hash(topic_hash)
+        end
       end
     end
 
@@ -37,9 +37,24 @@ module TextRazor
       return nil if raw_entities.nil?
 
       @entities ||= begin
-         raw_entities.map do |entity_hash|
-           Entity.create_from_hash(entity_hash)
-         end
+        raw_entities.map do |entity_hash|
+          Entity.create_from_hash(entity_hash)
+        end
+      end
+    end
+
+    def words
+      raw_sentences = raw_response["sentences"]
+      return nil if raw_sentences.nil?
+
+      @words ||= begin
+        words = []
+        raw_sentences.each do |sentence_hash|
+          sentence_hash["words"].each do |word_hash|
+            words << Word.create_from_hash(word_hash)
+          end
+        end
+        words
       end
     end
 

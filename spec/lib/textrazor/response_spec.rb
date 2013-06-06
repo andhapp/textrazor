@@ -126,6 +126,42 @@ module TextRazor
 
     end
 
+    context "#words" do
+
+      context "if there are any words returned" do
+
+        it "should return words" do
+          body = "{\"time\":\"0.013219\",\"response\":{\"language\":\"eng\",\"languageIsReliable\":true,\"sentences\":[{\"position\":1,\"words\":[{\"position\":0,\"startingPos\":0,\"endingPos\":3,\"stem\":\"the\",\"lemma\":\"the\",\"token\":\"The\",\"partOfSpeech\":\"DT\"},{\"position\":1,\"startingPos\":4,\"endingPos\":7,\"stem\":\"two\",\"lemma\":\"two\",\"token\":\"two\",\"partOfSpeech\":\"CD\"},{\"position\":2,\"startingPos\":8,\"endingPos\":11,\"stem\":\"men\",\"lemma\":\"man\",\"token\":\"men\",\"partOfSpeech\":\"NNS\"},{\"position\":3,\"startingPos\":12,\"endingPos\":19,\"stem\":\"accus\",\"lemma\":\"accuse\",\"token\":\"accused\",\"partOfSpeech\":\"VBN\"}]}]}}"
+
+          http_response = ::OpenStruct.new code: 200, body: body
+
+          response = Response.new(http_response)
+
+          words = response.words
+
+          expect(words).to_not be_nil
+          expect(words.size).to eq(4)
+          expect(words.first).to be_instance_of(Word)
+        end
+
+      end
+
+      context "if there are no words returned" do
+
+        it "should return nil" do
+          body = "{\"time\":\"0.013219\",\"response\":{\"language\":\"eng\",\"languageIsReliable\":true}}"
+
+          http_response = ::OpenStruct.new code: 200, body: body
+
+          response = Response.new(http_response)
+
+          expect(response.words).to be_nil
+        end
+
+      end
+
+    end
+
   end
 
 end

@@ -156,6 +156,25 @@ module TextRazor
 
     end
 
+    context ".words" do
+
+      it "should make correct calls" do
+        client = OpenStruct.new
+        response = OpenStruct.new words: ['Word1']
+
+        Client.should_receive(:new).
+          with(api_key, {extractors: ['words']}).
+          and_return(client)
+
+        client.should_receive(:analyse).
+          with("text").
+          and_return(response)
+
+        Client.words(api_key, 'text', {})
+      end
+
+    end
+
   end
 
 end

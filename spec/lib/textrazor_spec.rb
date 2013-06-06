@@ -24,4 +24,15 @@ describe TextRazor do
 
   end
 
+  context ".words" do
+
+    it "should make correct calls" do
+      TextRazor::Client.should_receive(:words).
+        with('api_key', 'text', {})
+
+      TextRazor.words('api_key', 'text', {})
+    end
+
+  end
+
 end
