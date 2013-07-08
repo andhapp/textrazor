@@ -4,17 +4,20 @@ This is a gem wrapper for TextRazor REST API reference.
 
 ## Installation
 
+
+
 Add this line to your application's Gemfile:
 
-    gem 'text_razor'
+    gem 'textrazor', :git => 'git://github.com/andhapp/textrazor.git'
 
 And then execute:
 
     $ bundle
 
-Or install it yourself as:
+Or download the git repository and install it yourself as:
 
-    $ gem install text_razor
+    $ gem build textrazor.gemspec
+    $ gem install textrazor-[version].gem
 
 ## Usage
 
