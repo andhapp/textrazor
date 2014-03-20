@@ -24,11 +24,12 @@ module TextRazor
 
         it "should make correct calls" do
           options = {api_key: 'api_key', extractors: %w(entities topics words), cleanup_html: true,
-                     filter_dbpedia_types: %w(type1), filter_freebase_types: %w(type2)}
+                     language: 'fre', filter_dbpedia_types: %w(type1), filter_freebase_types: %w(type2)}
 
           ::RestClient.should_receive(:post).
             with("http://api.textrazor.com/", { "text" => 'text', "apiKey" => 'api_key', "extractors" => "entities,topics,words",
-            "cleanupHTML" => true, "entities.filterDbpediaTypes" => "type1", "entities.filterFreebaseTypes" => "type2" },
+            "cleanupHTML" => true, "languageOverride" => 'fre', "entities.filterDbpediaTypes" => "type1",
+            "entities.filterFreebaseTypes" => "type2" },
              accept_encoding: 'gzip')
 
           Request.post('text', options)

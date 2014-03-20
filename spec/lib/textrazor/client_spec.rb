@@ -10,6 +10,7 @@ module TextRazor
     let(:empty_api_key_client) { Client.new('') }
     let(:custom_options_client) { Client.new(api_key, {extractors: %w(entities topics words),
                                     cleanup_html: true, filter_dbpedia_types: %w(type1),
+                                    language: 'fre',
                                     filter_freebase_types: %w(type2)}) }
     let(:default_options_client) { Client.new(api_key) }
 
@@ -20,13 +21,13 @@ module TextRazor
         it "should assign correct api_key, text and default options" do
           expect(default_options_client.api_key).to eq(api_key)
           expect(default_options_client.request_options).
-            to eq({extractors: %w(entities topics words dependency-trees relations entailments)})
+            to eq({extractors: %w(entities topics words phrases dependency-trees relations entailments senses)})
         end
 
         it "should assign correct api_key, text and passed in options" do
           expect(custom_options_client.api_key).to eq(api_key)
           expect(custom_options_client.request_options).
-            to eq({extractors: %w(entities topics words), cleanup_html: true,
+            to eq({extractors: %w(entities topics words), cleanup_html: true, language: 'fre',
                    filter_dbpedia_types: %w(type1), filter_freebase_types: %w(type2)})
         end
 
@@ -71,7 +72,7 @@ module TextRazor
 
           Request.should_receive(:post).
             with('text', {api_key: 'api_key', extractors: %w(entities topics words), cleanup_html: true,
-                          filter_dbpedia_types: %w(type1), filter_freebase_types: %w(type2)}).
+                          language: 'fre', filter_dbpedia_types: %w(type1), filter_freebase_types: %w(type2)}).
             and_return(request)
 
           Response.should_receive(:new).with(request)

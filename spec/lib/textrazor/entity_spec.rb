@@ -23,6 +23,7 @@ module TextRazor
         expect(entity.confidence_score).to eq(0.897858)
         expect(entity.wiki_link).to eq("http://en.wikipedia.org/wiki/Foreign_minister")
         expect(entity.matched_text).to eq("foreign ministers")
+        expect(entity.freebase_id).to eq("/m/01t_55")
         expect(entity.relevance_score).to eq(0.311479)
         expect(entity.entity_english_id).to eq("Foreign minister")
         expect(entity.starting_pos).to eq(3)

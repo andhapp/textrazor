@@ -4,6 +4,14 @@ module TextRazor
 
   class Request
 
+    OPTIONS_MAPPING = {
+      extractors: 'extractors',
+      cleanup_html: 'cleanupHTML',
+      language: 'languageOverride',
+      filter_dbpedia_types: 'entities.filterDbpediaTypes',
+      filter_freebase_types: 'entities.filterFreebaseTypes'
+    }
+
     def self.post(text, options)
       ::RestClient.post "http://api.textrazor.com/", build_query(text, options), accept_encoding: 'gzip'
     end
@@ -15,12 +23,7 @@ module TextRazor
 
       options.each do |key, value|
         value = value.join(",") if value.is_a?(Array)
-
-        key = "cleanupHTML" if key == :cleanup_html
-        key = "entities.filterDbpediaTypes" if key == :filter_dbpedia_types
-        key = "entities.filterFreebaseTypes" if key == :filter_freebase_types
-
-        query.merge!(key.to_s => value)
+        query[OPTIONS_MAPPING[key]] = value
       end
 
       query
