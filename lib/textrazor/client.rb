@@ -6,8 +6,10 @@ module TextRazor
     EmptyText = Class.new(StandardError)
     TextTooLong = Class.new(StandardError)
 
-    DefaultExtractors = ["entities", "topics", "words", "dependency-trees",
-                          "relations", "entailments"]
+    DEFAULT_EXTRACTORS = ['entities', 'topics', 'words', 'phrases', 'dependency-trees',
+                          'relations', 'entailments', 'senses']
+
+    REQUEST_OPTIONS = [:extractors, :cleanup_html, :language, :filter_dbpedia_types, :filter_freebase_types]
 
     attr_reader :response, :api_key, :request_options
 
@@ -52,11 +54,10 @@ module TextRazor
     end
 
     def assign_request_options(options)
-      @request_options = {}
-      @request_options[:extractors] = options[:extractors] || DefaultExtractors
-      @request_options[:cleanup_html] = options[:cleanup_html] if options[:cleanup_html]
-      @request_options[:filter_dbpedia_types] = options[:filter_dbpedia_types] if options[:filter_dbpedia_types]
-      @request_options[:filter_freebase_types] = options[:filter_freebase_types] if options[:filter_freebase_types]
+      @request_options = { extractors: DEFAULT_EXTRACTORS }
+      REQUEST_OPTIONS.each do |key|
+        @request_options[key] = options[key] if options[key]
+      end
     end
 
     def assert_text(text)
