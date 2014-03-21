@@ -1,4 +1,5 @@
 require "textrazor/version"
+require "textrazor/configuration"
 require "textrazor/client"
 require "textrazor/request"
 require "textrazor/response"
@@ -18,6 +19,22 @@ module TextRazor
 
   def self.words(api_key, text, options = {})
     Client.words(api_key, text, options)
+  end
+
+  class << self
+    attr_writer :configuration
+  end
+
+  def self.configuration
+    @configuration ||= Configuration.new
+  end
+
+  def self.reset
+    @configuration = Configuration.new
+  end
+
+  def self.configure
+    yield(configuration)
   end
 
 end

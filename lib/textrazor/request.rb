@@ -4,6 +4,9 @@ module TextRazor
 
   class Request
 
+    HTTP_URL = 'http://api.textrazor.com/'
+    HTTPS_URL = 'https://api.textrazor.com/'
+
     OPTIONS_MAPPING = {
       extractors: 'extractors',
       cleanup_html: 'cleanupHTML',
@@ -13,7 +16,11 @@ module TextRazor
     }
 
     def self.post(text, options)
-      ::RestClient.post "http://api.textrazor.com/", build_query(text, options), accept_encoding: 'gzip'
+      ::RestClient.post url, build_query(text, options), accept_encoding: 'gzip'
+    end
+
+    def self.url
+      TextRazor.configuration.secure ? HTTPS_URL : HTTP_URL
     end
 
     private

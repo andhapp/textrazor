@@ -21,6 +21,17 @@ Or download the git repository and install it yourself as:
 
 ## Usage
 
+### Configuration
+
+By default TextRazor uses the secure SSL endpoint of the Text Razor API.
+You can use the HTTP endpoint by configuring TextRazor:
+
+```
+TextRazor.configure do |config|
+  config.secure = false
+end
+```
+
 ### When the client is persisted across different requests
 
 ```
@@ -39,8 +50,8 @@ response.words # Returns an array of TextRazor::Word instances.
 
 ### One off requests
 
-For making one off request to retrieve topics, entities or words you 
-can use the following handy method. A new client is instantiated and 
+For making one off request to retrieve topics, entities or words you
+can use the following handy method. A new client is instantiated and
 discarded everytime you make this request.
 
 ```
@@ -54,7 +65,7 @@ TextRazor.words('api_key', 'text')
 
 ## Next steps
 
-Only implemented this for topics, entities, and words. Also, implement 
+Only implemented this for topics, entities, and words. Also, implement
 it for other information that we can retrieve from the public API.
 
 

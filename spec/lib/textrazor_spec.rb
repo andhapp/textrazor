@@ -2,7 +2,7 @@ require 'spec_helper'
 
 describe TextRazor do
 
-  context ".topics" do
+  describe ".topics" do
 
     it "should make correct calls" do
       TextRazor::Client.should_receive(:topics).
@@ -13,7 +13,7 @@ describe TextRazor do
 
   end
 
-  context ".entities" do
+  describe ".entities" do
 
     it "should make correct calls" do
       TextRazor::Client.should_receive(:entities).
@@ -24,7 +24,7 @@ describe TextRazor do
 
   end
 
-  context ".words" do
+  describe ".words" do
 
     it "should make correct calls" do
       TextRazor::Client.should_receive(:words).
@@ -33,6 +33,20 @@ describe TextRazor do
       TextRazor.words('api_key', 'text', {})
     end
 
+  end
+
+  describe ".reset" do
+    before :each do
+      TextRazor.configure do |config|
+        config.secure = false
+      end
+    end
+
+    it "resets the configuration" do
+      TextRazor.reset
+      config = TextRazor.configuration
+      expect(config.secure).to eq(true)
+    end
   end
 
 end
