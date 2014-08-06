@@ -91,6 +91,41 @@ module TextRazor
 
     end
 
+    context "#coarse_topics" do
+
+      context "if there are topics returned from api" do
+
+        it "should return topics" do
+          body = "\n    {\"time\":\"0.013219\",\"response\":{\"language\":\"eng\",\"languageIsReliable\":true,\"coarseTopics\":[{\"id\":0,\"label\":\"Airlines \",\"wikiLink\":\"http://en.wikipedia.org/Category:Airlines_by_country\",\"score\":0.199069},{\"id\":1,\"label\":\"Companies \",\"wikiLink\":\"http://en.wikipedia.org/Category:Companies_by_year_of_establishment\",\"score\":0.136068}]}} \n"
+
+          http_response = ::OpenStruct.new code: 200, body: body
+
+          response = Response.new(http_response)
+
+          topics = response.coarse_topics
+
+          expect(topics).to_not be_nil
+          expect(topics.size).to eq(2)
+        end
+
+      end
+
+      context "if there are no topics returned from api" do
+
+        it "should return nil" do
+          body = "{\"time\":\"0.013219\",\"response\":{\"language\":\"eng\",\"languageIsReliable\":true}}"
+
+          http_response = ::OpenStruct.new code: 200, body: body
+
+          response = Response.new(http_response)
+
+          expect(response.topics).to be_nil
+        end
+
+      end
+
+    end
+
     context "#entities" do
 
       context "if there are any entities returned" do

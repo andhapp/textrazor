@@ -22,14 +22,11 @@ module TextRazor
     end
 
     def topics
-      raw_topics = raw_response["topics"]
-      return nil if raw_topics.nil?
+      @topics ||= parse_topics(raw_response["topics"])
+    end
 
-      @topics ||= begin
-        raw_topics.map do |topic_hash|
-          Topic.create_from_hash(topic_hash)
-        end
-      end
+     def coarse_topics
+      @coarse_topics ||= parse_topics(raw_response["coarseTopics"])
     end
 
     def entities
@@ -70,6 +67,14 @@ module TextRazor
 
     def request_entity_too_long?(code)
       code == 413
+    end
+
+    def parse_topics(raw_topics)
+      return nil if raw_topics.nil?
+
+      raw_topics.map do |topic_hash|
+        Topic.create_from_hash(topic_hash)
+      end
     end
 
   end

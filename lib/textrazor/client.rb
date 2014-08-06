@@ -31,6 +31,12 @@ module TextRazor
         topics
     end
 
+    def self.coarse_topics(api_key, text, options = {})
+      new(api_key, options.merge(extractors: ['topics'])).
+        analyse(text).
+        coarse_topics
+    end
+
     def self.entities(api_key, text, options = {})
       new(api_key, options.merge(extractors: ['entities'])).
         analyse(text).
