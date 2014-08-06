@@ -42,6 +42,8 @@ response = client.analyse('text to be analysed')
 
 response.topics # Returns an array of TextRazor::Topic instances.
 
+response.coarse_topics # Returns an array of TextRazor::Topic instances.
+
 response.entities # Returns an array of TextRazor::Entity instances.
 
 response.words # Returns an array of TextRazor::Word instances.
@@ -56,6 +58,8 @@ discarded everytime you make this request.
 
 ```
 TextRazor.topics('api_key', 'text')
+
+TextRazor.coarse_topics('api_key', 'text')
 
 TextRazor.entities('api_key', 'text')
 
