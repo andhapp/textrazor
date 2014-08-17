@@ -6,6 +6,7 @@ require "textrazor/response"
 require "textrazor/topic"
 require "textrazor/entity"
 require "textrazor/word"
+require "textrazor/phrase"
 
 module TextRazor
 
@@ -19,6 +20,10 @@ module TextRazor
 
   def self.words(api_key, text, options = {})
     Client.words(api_key, text, options)
+  end
+
+  def self.phrases(api_key, text, options = {})
+    Client.phrases(api_key, text, options)
   end
 
   class << self

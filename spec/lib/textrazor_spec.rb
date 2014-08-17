@@ -35,6 +35,17 @@ describe TextRazor do
 
   end
 
+  describe ".phrases" do
+
+    it "should make correct calls" do
+      TextRazor::Client.should_receive(:phrases).
+        with('api_key', 'text', {})
+
+      TextRazor.phrases('api_key', 'text', {})
+    end
+
+  end
+
   describe ".reset" do
     before :each do
       TextRazor.configure do |config|
