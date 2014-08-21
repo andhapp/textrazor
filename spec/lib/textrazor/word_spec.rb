@@ -7,8 +7,16 @@ module TextRazor
     context "#create_from_hash" do
 
       it "should create a new instance" do
-        word_hash = {"position" => 0, "startingPos" => 0, "endingPos" => 3, "stem" => "the",
-                     "lemma" => "the", "token" => "The", "partOfSpeech" => "DT"}
+        word_hash = {
+          "position"        => 0,
+          "startingPos"     => 0,
+          "endingPos"       => 3,
+          "stem"            => "the",
+          "lemma"           => "the",
+          "token"           => "The",
+          "partOfSpeech"    => "DT",
+          "parentPosition"  => 2
+        }
 
         word = Word.create_from_hash(word_hash)
 
@@ -19,6 +27,7 @@ module TextRazor
         expect(word.lemma).to eq("the")
         expect(word.token).to eq("The")
         expect(word.part_of_speech).to eq("DT")
+        expect(word.parent_position).to eq(2)
       end
 
     end

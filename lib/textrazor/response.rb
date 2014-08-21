@@ -55,6 +55,10 @@ module TextRazor
       end
     end
 
+    def phrases
+      @phrases ||= parse_phrases(raw_response["nounPhrases"], words)
+    end
+
     private
 
     def bad_request?(code)
@@ -74,6 +78,14 @@ module TextRazor
 
       raw_topics.map do |topic_hash|
         Topic.create_from_hash(topic_hash)
+      end
+    end
+
+    def parse_phrases(raw_phrases, words)
+      return nil if raw_phrases.nil?
+
+      raw_phrases.map do |phrase_hash|
+        Phrase.create_from_hash(phrase_hash, words)
       end
     end
 
