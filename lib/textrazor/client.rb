@@ -9,7 +9,8 @@ module TextRazor
     DEFAULT_EXTRACTORS = ['entities', 'topics', 'words', 'phrases', 'dependency-trees',
                           'relations', 'entailments', 'senses']
 
-    REQUEST_OPTIONS = [:extractors, :cleanup_html, :language, :filter_dbpedia_types, :filter_freebase_types]
+    REQUEST_OPTIONS = [:extractors, :cleanup_html, :language, 
+                       :filter_dbpedia_types, :filter_freebase_types]
 
     attr_reader :response, :api_key, :request_options
 

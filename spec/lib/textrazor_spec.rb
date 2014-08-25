@@ -5,7 +5,7 @@ describe TextRazor do
   describe ".topics" do
 
     it "should make correct calls" do
-      TextRazor::Client.should_receive(:topics).
+      expect(TextRazor::Client).to receive(:topics).
         with('api_key', 'text', {})
 
       TextRazor.topics('api_key', 'text', {})
@@ -16,7 +16,7 @@ describe TextRazor do
   describe ".entities" do
 
     it "should make correct calls" do
-      TextRazor::Client.should_receive(:entities).
+      expect(TextRazor::Client).to receive(:entities).
         with('api_key', 'text', {})
 
       TextRazor.entities('api_key', 'text', {})
@@ -27,7 +27,7 @@ describe TextRazor do
   describe ".words" do
 
     it "should make correct calls" do
-      TextRazor::Client.should_receive(:words).
+      expect(TextRazor::Client).to receive(:words).
         with('api_key', 'text', {})
 
       TextRazor.words('api_key', 'text', {})
@@ -38,7 +38,7 @@ describe TextRazor do
   describe ".phrases" do
 
     it "should make correct calls" do
-      TextRazor::Client.should_receive(:phrases).
+      expect(TextRazor::Client).to receive(:phrases).
         with('api_key', 'text', {})
 
       TextRazor.phrases('api_key', 'text', {})

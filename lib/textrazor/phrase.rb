@@ -15,9 +15,7 @@ module TextRazor
 
     def match_words(positions, words)
       phrase = []
-
       positions.each { |position| phrase.push words[position].token }
-
       phrase.join(' ')
     end
 

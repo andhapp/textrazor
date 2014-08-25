@@ -45,7 +45,7 @@ module TextRazor
         it "should make correct calls" do
           options = {api_key: 'api_key', extractors: %w(entities topics words dependency-trees relations entailments)}
 
-          ::RestClient.should_receive(:post).
+          expect(::RestClient).to receive(:post).
             with("https://api.textrazor.com/", { "text" => 'text', "apiKey" => 'api_key',
             "extractors" => "entities,topics,words,dependency-trees,relations,entailments" }, accept_encoding: 'gzip')
 
@@ -60,7 +60,7 @@ module TextRazor
           options = {api_key: 'api_key', extractors: %w(entities topics words), cleanup_html: true,
                      language: 'fre', filter_dbpedia_types: %w(type1), filter_freebase_types: %w(type2)}
 
-          ::RestClient.should_receive(:post).
+          expect(::RestClient).to receive(:post).
             with("https://api.textrazor.com/", { "text" => 'text', "apiKey" => 'api_key', "extractors" => "entities,topics,words",
             "cleanupHTML" => true, "languageOverride" => 'fre', "entities.filterDbpediaTypes" => "type1",
             "entities.filterFreebaseTypes" => "type2" },

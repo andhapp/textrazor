@@ -70,12 +70,12 @@ module TextRazor
         it "should make correct calls" do
           request = Object.new
 
-          Request.should_receive(:post).
+          expect(Request).to receive(:post).
             with('text', {api_key: 'api_key', extractors: %w(entities topics words), cleanup_html: true,
                           language: 'fre', filter_dbpedia_types: %w(type1), filter_freebase_types: %w(type2)}).
             and_return(request)
 
-          Response.should_receive(:new).with(request)
+          expect(Response).to receive(:new).with(request)
 
           client.analyse('text')
         end
@@ -125,11 +125,11 @@ module TextRazor
         client = OpenStruct.new
         response = OpenStruct.new topics: ['topic1'], coarseTopics: ['topic1']
 
-        Client.should_receive(:new).
+        expect(Client).to receive(:new).
           with(api_key, {extractors: ['topics']}).
           and_return(client)
 
-        client.should_receive(:analyse).
+        expect(client).to receive(:analyse).
           with("text").
           and_return(response)
 
@@ -144,11 +144,11 @@ module TextRazor
         client = OpenStruct.new
         response = OpenStruct.new topics: ['topic1'], coarseTopics: ['topic1']
 
-        Client.should_receive(:new).
+        expect(Client).to receive(:new).
           with(api_key, {extractors: ['topics']}).
           and_return(client)
 
-        client.should_receive(:analyse).
+        expect(client).to receive(:analyse).
           with("text").
           and_return(response)
 
@@ -163,11 +163,11 @@ module TextRazor
         client = OpenStruct.new
         response = OpenStruct.new entities: ['Entity1']
 
-        Client.should_receive(:new).
+        expect(Client).to receive(:new).
           with(api_key, {extractors: ['entities']}).
           and_return(client)
 
-        client.should_receive(:analyse).
+        expect(client).to receive(:analyse).
           with("text").
           and_return(response)
 
@@ -182,11 +182,11 @@ module TextRazor
         client = OpenStruct.new
         response = OpenStruct.new words: ['Word1']
 
-        Client.should_receive(:new).
+        expect(Client).to receive(:new).
           with(api_key, {extractors: ['words']}).
           and_return(client)
 
-        client.should_receive(:analyse).
+        expect(client).to receive(:analyse).
           with("text").
           and_return(response)
 
@@ -201,11 +201,11 @@ module TextRazor
         client = OpenStruct.new
         response = OpenStruct.new phrases: ['Phrase1']
 
-        Client.should_receive(:new).
+        expect(Client).to receive(:new).
           with(api_key, {extractors: ['phrases', 'words']}).
           and_return(client)
 
-        client.should_receive(:analyse).
+        expect(client).to receive(:analyse).
           with("text").
           and_return(response)
 

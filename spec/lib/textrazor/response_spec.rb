@@ -12,7 +12,7 @@ module TextRazor
           body = "{\"response\":\"{}\"}"
           http_response = ::OpenStruct.new code: 200, body: body
 
-          JSON.should_receive(:parse).
+          expect(JSON).to receive(:parse).
             with(body).
             and_return({"response"=>"{}"})
 

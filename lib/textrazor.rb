@@ -1,5 +1,6 @@
 require "textrazor/version"
 require "textrazor/configuration"
+require "textrazor/util"
 require "textrazor/client"
 require "textrazor/request"
 require "textrazor/response"
