@@ -48,6 +48,8 @@ response.entities # Returns an array of TextRazor::Entity instances.
 
 response.words # Returns an array of TextRazor::Word instances.
 
+response.phrases # Returns an array of TextRazor::Phrase instances.
+
 ```
 
 ### One off requests
@@ -65,11 +67,13 @@ TextRazor.entities('api_key', 'text')
 
 TextRazor.words('api_key', 'text')
 
+TextRazor.phrases('api_key', 'text')
+
 ```
 
 ## Next steps
 
-Only implemented this for topics, entities, and words. Also, implement
+Only implemented this for topics, entities, words and phrases. Also, implement
 it for other information that we can retrieve from the public API.
 
 
