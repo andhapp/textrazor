@@ -57,13 +57,16 @@ module TextRazor
       context "custom options" do
 
         it "should make correct calls" do
-          options = {api_key: 'api_key', extractors: %w(entities topics words), cleanup_html: true,
-                     language: 'fre', filter_dbpedia_types: %w(type1), filter_freebase_types: %w(type2)}
+          options = {api_key: 'api_key', extractors: %w(entities topics words), cleanup_mode: 'raw',
+                     cleanup_return_cleaned: true, cleanup_return_raw: true, language: 'fre', 
+                     filter_dbpedia_types: %w(type1), filter_freebase_types: %w(type2), allow_overlap: false,
+                     enrichment_queries: 'queries'}
 
           expect(::RestClient).to receive(:post).
             with("https://api.textrazor.com/", { "text" => 'text', "apiKey" => 'api_key', "extractors" => "entities,topics,words",
-            "cleanupHTML" => true, "languageOverride" => 'fre', "entities.filterDbpediaTypes" => "type1",
-            "entities.filterFreebaseTypes" => "type2" },
+            "cleanup.mode" => "raw", "cleanup.returnCleaned" => true, "cleanup.returnRaw" => true, "languageOverride" => 'fre',
+            "entities.filterDbpediaTypes" => "type1", "entities.filterFreebaseTypes" => "type2" , "entities.allowOverlap" => false,
+            "entities.enrichmentQueries" => "queries"},
              accept_encoding: 'gzip')
 
           Request.post('text', options)

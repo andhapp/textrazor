@@ -9,10 +9,14 @@ module TextRazor
 
     OPTIONS_MAPPING = {
       extractors: 'extractors',
-      cleanup_html: 'cleanupHTML',
+      cleanup_mode: 'cleanup.mode',
+      cleanup_return_cleaned: 'cleanup.returnCleaned',
+      cleanup_return_raw: 'cleanup.returnRaw',
       language: 'languageOverride',
       filter_dbpedia_types: 'entities.filterDbpediaTypes',
-      filter_freebase_types: 'entities.filterFreebaseTypes'
+      filter_freebase_types: 'entities.filterFreebaseTypes',
+      allow_overlap: 'entities.allowOverlap',
+      enrichment_queries: 'entities.enrichmentQueries'
     }
 
     def self.post(text, options)
