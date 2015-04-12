@@ -8,7 +8,7 @@ module TextRazor
     Unauthorised = Class.new(StandardError)
     RequestEntityTooLong = Class.new(StandardError)
 
-    attr_reader :raw_response, :time
+    attr_reader :raw_response, :time, :custom_annotation_output, :cleaned_text, :raw_text
 
     def initialize(http_response)
       code = http_response.code
@@ -19,8 +19,18 @@ module TextRazor
       raise RequestEntityTooLong.new(body) if request_entity_too_long?(code)
 
       json_body = ::JSON::parse(body, symbolize_names: true)
+
       @time = json_body[:time].to_f
+      @ok = json_body[:ok]
+      @custom_annotation_output = json_body[:customAnnotationOutput]
+      @cleaned_text = json_body[:cleanedText]
+      @raw_text = json_body[:rawText]
+
       @raw_response = json_body[:response]
+    end
+
+    def ok?
+      @ok
     end
 
     def topics

@@ -11,9 +11,9 @@ module TextRazor
     DEFAULT_EXTRACTORS = ['entities', 'topics', 'words', 'phrases', 'dependency-trees',
                           'relations', 'entailments', 'senses']
 
-    DEFAULT_CLEANUP_MODE = 'cleanHTML'
+    DEFAULT_CLEANUP_MODE = 'raw'
 
-    VALID_CLEANUP_MODE_VALUES = ['raw', 'stripTags', DEFAULT_CLEANUP_MODE]
+    VALID_CLEANUP_MODE_VALUES = [DEFAULT_CLEANUP_MODE, 'stripTags', 'cleanHTML']
 
     REQUEST_OPTIONS = [:extractors, :rules, :cleanup_mode, :cleanup_return_cleaned, :cleanup_return_raw, 
                        :language, :filter_dbpedia_types, :filter_freebase_types, :allow_overlap, 
@@ -30,7 +30,9 @@ module TextRazor
 
     def analyse(text)
       assert_text(text)
-      options = {api_key: api_key}.merge(request_options)
+      options = {
+        api_key: api_key
+      }.merge(request_options)
 
       Response.new(Request.post(text, options))
     end
@@ -86,7 +88,6 @@ module TextRazor
         extractors: extractors || DEFAULT_EXTRACTORS, 
         cleanup_mode: cleanup_mode || DEFAULT_CLEANUP_MODE
       }
-
 
       REQUEST_OPTIONS.each do |key|
         @request_options[key] = options[key] unless options[key].nil?

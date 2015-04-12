@@ -59,13 +59,77 @@ module TextRazor
     describe '#time' do
       
       it 'returns time taken to process request' do
-          body = {time: "0.013219"}.to_json
+        body = {time: "0.013219"}.to_json
+        http_response = ::OpenStruct.new code: 200, body: body
+        response = Response.new(http_response)
+
+        time = response.time 
+
+        expect(time).to eq(0.013219)
+      end
+
+    end
+
+    describe '#ok?' do
+
+      context 'when successfully analysed' do
+
+        it 'returns true' do
+          body = {ok: true}.to_json
           http_response = ::OpenStruct.new code: 200, body: body
           response = Response.new(http_response)
 
-          time = response.time 
+          expect(response).to be_ok
+        end
 
-          expect(time).to eq(0.013219)
+      end
+
+      context 'when unsuccessfully analysed' do
+
+        it 'returns false' do
+          body = {ok: false}.to_json
+          http_response = ::OpenStruct.new code: 200, body: body
+          response = Response.new(http_response)
+
+          expect(response).to_not be_ok
+        end
+
+      end
+      
+    end
+
+    describe '#cleaned_text' do
+
+      it 'returns cleaned text' do
+        body = {cleanedText: 'cleaned text'}.to_json
+        http_response = ::OpenStruct.new code: 200, body: body
+        response = Response.new(http_response)
+
+        expect(response.cleaned_text).to eq 'cleaned text'
+      end
+
+    end
+
+    describe '#raw_text' do
+
+      it 'returns raw text' do
+        body = {rawText: 'raw text'}.to_json
+        http_response = ::OpenStruct.new code: 200, body: body
+        response = Response.new(http_response)
+
+        expect(response.raw_text).to eq 'raw text'
+      end
+
+    end
+
+    describe '#custom_annotation_output' do
+
+      it 'returns raw text' do
+        body = {customAnnotationOutput: 'custom annotation output'}.to_json
+        http_response = ::OpenStruct.new code: 200, body: body
+        response = Response.new(http_response)
+
+        expect(response.custom_annotation_output).to eq 'custom annotation output'
       end
 
     end

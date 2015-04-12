@@ -10,7 +10,7 @@ module TextRazor
     let(:empty_api_key_client) { Client.new('') }
     let(:custom_options_client) { 
       Client.new(api_key, { 
-        extractors: %w(entities topics words), cleanup_mode: 'cleanHTML',
+        extractors: %w(entities topics words), cleanup_mode: 'raw',
         cleanup_return_cleaned: true, cleanup_return_raw: true,
         filter_dbpedia_types: %w(type1), language: 'fre',
         filter_freebase_types: %w(type2), allow_overlap: false
@@ -28,7 +28,7 @@ module TextRazor
             expect(default_options_client.api_key).to eq(api_key)
             expect(default_options_client.request_options).
               to eq({extractors: %w(entities topics words phrases dependency-trees 
-                     relations entailments senses), cleanup_mode: 'cleanHTML'})
+                     relations entailments senses), cleanup_mode: 'raw'})
           end
 
         end
@@ -38,7 +38,7 @@ module TextRazor
           it "assigns correctly" do
             expect(custom_options_client.api_key).to eq(api_key)
             expect(custom_options_client.request_options).
-              to eq({extractors: %w(entities topics words), cleanup_mode: 'cleanHTML', language: 'fre',
+              to eq({extractors: %w(entities topics words), cleanup_mode: 'raw', language: 'fre',
                      cleanup_return_cleaned: true, cleanup_return_raw: true,
                      filter_dbpedia_types: %w(type1), filter_freebase_types: %w(type2), 
                      allow_overlap: false})
@@ -104,7 +104,7 @@ module TextRazor
           request = BasicObject.new
 
           expect(Request).to receive(:post).
-            with('text', {api_key: 'api_key', extractors: %w(entities topics words), cleanup_mode: 'cleanHTML',
+            with('text', {api_key: 'api_key', extractors: %w(entities topics words), cleanup_mode: 'raw',
                           cleanup_return_cleaned: true, cleanup_return_raw: true, language: 'fre', 
                           filter_dbpedia_types: %w(type1), filter_freebase_types: %w(type2), 
                           allow_overlap: false}).
