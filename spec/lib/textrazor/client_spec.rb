@@ -4,19 +4,34 @@ module TextRazor
 
   describe Client do
 
-    let(:api_key) { 'api_key' }
-    let(:client) { custom_options_client }
-    let(:nil_api_key_client) { Client.new(nil) }
-    let(:empty_api_key_client) { Client.new('') }
-    let(:custom_options_client) { 
-      Client.new(api_key, { 
+    let(:api_key) do
+     'api_key'
+    end
+
+    let(:client) do
+      custom_options_client
+    end
+
+    let(:nil_api_key_client) do
+      Client.new(nil)
+    end
+
+    let(:empty_api_key_client) do
+      Client.new('')
+    end
+
+    let(:custom_options_client) do
+      Client.new(api_key, {
         extractors: %w(entities topics words), cleanup_mode: 'raw',
         cleanup_return_cleaned: true, cleanup_return_raw: true,
         filter_dbpedia_types: %w(type1), language: 'fre',
         filter_freebase_types: %w(type2), allow_overlap: false
-      }) 
-    }
-    let(:default_options_client) { Client.new(api_key) }
+      })
+    end
+
+    let(:default_options_client) do
+      Client.new(api_key)
+    end
 
     describe "#initialize" do
 
@@ -27,20 +42,20 @@ module TextRazor
           it 'assigns correctly' do
             expect(default_options_client.api_key).to eq(api_key)
             expect(default_options_client.request_options).
-              to eq({extractors: %w(entities topics words phrases dependency-trees 
+              to eq({extractors: %w(entities topics words phrases dependency-trees
                      relations entailments senses), cleanup_mode: 'raw'})
           end
 
         end
 
         context 'and custom request options' do
-          
+
           it "assigns correctly" do
             expect(custom_options_client.api_key).to eq(api_key)
             expect(custom_options_client.request_options).
               to eq({extractors: %w(entities topics words), cleanup_mode: 'raw', language: 'fre',
                      cleanup_return_cleaned: true, cleanup_return_raw: true,
-                     filter_dbpedia_types: %w(type1), filter_freebase_types: %w(type2), 
+                     filter_dbpedia_types: %w(type1), filter_freebase_types: %w(type2),
                      allow_overlap: false})
           end
 
@@ -87,7 +102,7 @@ module TextRazor
             expect { Client.new(api_key, {cleanup_mode: 'invalid-cleanup-mode'}) }.
               to raise_error(Client::UnsupportedCleanupMode)
           end
-          
+
         end
 
       end
@@ -96,7 +111,9 @@ module TextRazor
 
     context "#analyse" do
 
-      let(:very_long_text) { "L" * 201 * 1024 }
+      let(:very_long_text) do
+        "L" * 201 * 1024
+      end
 
       context "valid value of 'text'" do
 
@@ -105,8 +122,8 @@ module TextRazor
 
           expect(Request).to receive(:post).
             with('text', {api_key: 'api_key', extractors: %w(entities topics words), cleanup_mode: 'raw',
-                          cleanup_return_cleaned: true, cleanup_return_raw: true, language: 'fre', 
-                          filter_dbpedia_types: %w(type1), filter_freebase_types: %w(type2), 
+                          cleanup_return_cleaned: true, cleanup_return_raw: true, language: 'fre',
+                          filter_dbpedia_types: %w(type1), filter_freebase_types: %w(type2),
                           allow_overlap: false}).
             and_return(request)
 
