@@ -2,17 +2,19 @@ module TextRazor
 
   class Topic
 
+    extend Util
+
     attr_reader :id, :label, :wiki_link, :score
 
-    def initialize(id, label, wiki_link, score)
-      @id = id
-      @label = label
-      @wiki_link = wiki_link
-      @score = score
+    def initialize(params = {})
+      params.each do |k, v|
+        instance_variable_set(:"@#{k}", v) if v && self.respond_to?(:"#{k}")
+      end
     end
 
     def self.create_from_hash(params)
-      new(params["id"], params["label"], params["wikiLink"], params["score"])
+      params = Hash[params.map {|k, v| [standardize(k), v] }]
+      new(params)
     end
 
   end
