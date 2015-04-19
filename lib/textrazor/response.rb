@@ -8,7 +8,8 @@ module TextRazor
     Unauthorised = Class.new(StandardError)
     RequestEntityTooLong = Class.new(StandardError)
 
-    attr_reader :raw_response, :time, :custom_annotation_output, :cleaned_text, :raw_text
+    attr_reader :raw_response, :time, :custom_annotation_output, 
+                :cleaned_text, :raw_text
 
     def initialize(http_response)
       code = http_response.code
@@ -33,6 +34,10 @@ module TextRazor
       @ok
     end
 
+    def entailments
+      @entailments ||= parse_entailments(raw_response[:entailments])
+    end
+
     def topics
       @topics ||= parse_topics(raw_response[:topics])
     end
@@ -42,29 +47,11 @@ module TextRazor
     end
 
     def entities
-      raw_entities = raw_response[:entities]
-      return nil if raw_entities.nil?
-
-      @entities ||= begin
-        raw_entities.map do |entity_hash|
-          Entity.create_from_hash(entity_hash)
-        end
-      end
+      @entities ||= parse_entities(raw_response[:entities])
     end
 
     def words
-      raw_sentences = raw_response[:sentences]
-      return nil if raw_sentences.nil?
-
-      @words ||= begin
-        words = []
-        raw_sentences.each do |sentence_hash|
-          sentence_hash[:words].each do |word_hash|
-            words << Word.create_from_hash(word_hash)
-          end
-        end
-        words
-      end
+      @words ||= parse_words(raw_response[:sentences])
     end
 
     def phrases
@@ -85,12 +72,40 @@ module TextRazor
       code == 413
     end
 
+    def parse_entailments(raw_entailments)
+      return nil if raw_entailments.nil?
+
+      raw_entailments.map do |entailment_hash|
+        Entailment.create_from_hash(entailment_hash)
+      end
+    end
+
     def parse_topics(raw_topics)
       return nil if raw_topics.nil?
 
       raw_topics.map do |topic_hash|
         Topic.create_from_hash(topic_hash)
       end
+    end
+
+    def parse_entities(raw_entities)
+      return nil if raw_entities.nil?
+
+      raw_entities.map do |entity_hash|
+        Entity.create_from_hash(entity_hash)
+      end
+    end
+
+    def parse_words(raw_sentences)
+      return nil if raw_sentences.nil?
+
+      words = []
+      raw_sentences.each do |sentence_hash|
+        sentence_hash[:words].each do |word_hash|
+          words << Word.create_from_hash(word_hash)
+        end
+      end
+      words
     end
 
     def parse_phrases(raw_phrases, words)

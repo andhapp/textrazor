@@ -134,6 +134,61 @@ module TextRazor
 
     end
 
+    describe 'entailments' do
+
+      let(:http_response) { ::OpenStruct.new(code: 200, body: body) }
+      let(:response) { Response.new(http_response) }
+      
+      context 'when response has entailments' do
+
+        let(:body) { 
+          {
+            "time"=>"0.013219", 
+            "response"=>{
+              "language"=>"eng", 
+              "languageIsReliable"=>true,
+              "entailments"=>[{
+                "id"=>2, "wordPositions"=>[1], 
+                "entailedWords"=>["misrepresentation"], 
+                "entailedTree"=>{
+                  "word"=>"misrepresentation", "wordId"=>0, "parentRelation"=>-1
+                },
+                "priorScore"=>0.00132419, 
+                "contextScore"=>0.0694058, 
+                "score"=>0.154246
+              }]
+            }
+          }.to_json 
+        }
+
+        it 'returns entailments' do
+          entailments = response.entailments
+
+          expect(entailments).to_not be_nil
+          expect(entailments.size).to eq(1)
+        end
+
+      end
+
+      context  'when response does not have entailments' do
+
+        let(:body) { 
+          {
+            "time"=>"0.013219", 
+            "response"=>{
+              "language"=>"eng", "languageIsReliable"=>true
+            }
+          }.to_json 
+        }
+
+        it 'returns nil' do
+          expect(response.entailments).to be_nil
+        end
+
+      end
+
+    end
+
     describe "#topics" do
 
       let(:http_response) { ::OpenStruct.new(code: 200, body: body) }

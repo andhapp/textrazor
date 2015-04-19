@@ -7,8 +7,12 @@ module TextRazor
     context "#create_from_hash" do
 
       it "should create a new instance" do
-        topic_hash = {"id" => 1, "label" => "Sports", "wikiLink" => "link_to_wiki", 
-                      "score" => 1.03589}
+        topic_hash = {
+          :id => 1, 
+          :label => "Sports", 
+          :wikiLink => "link_to_wiki", 
+          :score => 1.03589
+        }
 
         topic = Topic.create_from_hash(topic_hash)
 
