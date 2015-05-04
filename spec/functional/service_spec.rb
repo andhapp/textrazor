@@ -4,6 +4,8 @@ describe 'Functional spec', functional: true do
 
   it 'should return response' do
     api_key = ENV["TEXTRAZOR_API_KEY"] 
+    raise 'Please specify a TEXTRAZOR_API_KEY in your local environment to run this' unless api_key
+
     client = TextRazor::Client.new(api_key)
 
     text_to_be_analysed = <<TEXT

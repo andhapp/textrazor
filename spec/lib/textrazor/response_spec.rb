@@ -4,6 +4,14 @@ module TextRazor
 
   describe Response do
 
+    let(:http_response) do
+      ::OpenStruct.new(code: 200, body: body)
+    end
+
+    let(:response) do
+      Response.new(http_response)
+    end
+
     describe "#initialize" do
 
       context "when HTTP response code is 200" do
@@ -98,34 +106,15 @@ module TextRazor
 
     end
 
-    describe '#cleaned_text' do
-
-      it 'returns cleaned text' do
-        body = {cleanedText: 'cleaned text'}.to_json
-        http_response = ::OpenStruct.new code: 200, body: body
-        response = Response.new(http_response)
-
-        expect(response.cleaned_text).to eq 'cleaned text'
-      end
-
-    end
-
-    describe '#raw_text' do
-
-      it 'returns raw text' do
-        body = {rawText: 'raw text'}.to_json
-        http_response = ::OpenStruct.new code: 200, body: body
-        response = Response.new(http_response)
-
-        expect(response.raw_text).to eq 'raw text'
-      end
-
-    end
-
     describe '#custom_annotation_output' do
 
       it 'returns raw text' do
-        body = {customAnnotationOutput: 'custom annotation output'}.to_json
+        body = {
+          response: {
+            customAnnotationOutput: 'custom annotation output'
+          }
+        }.to_json
+
         http_response = ::OpenStruct.new code: 200, body: body
         response = Response.new(http_response)
 
@@ -134,6 +123,40 @@ module TextRazor
 
     end
 
+    describe '#cleaned_text' do
+
+      it 'returns cleaned text' do
+        body = {
+          response: {
+            cleanedText: 'cleaned text' 
+          }
+        }.to_json
+
+        http_response = ::OpenStruct.new code: 200, body: body
+        response = Response.new(http_response)
+
+        expect(response.cleaned_text).to eq 'cleaned text'
+      end
+
+    end
+   
+    describe '#raw_text' do
+
+      it 'returns raw text' do
+        body = {
+          response:{
+            rawText: 'raw text' 
+          }
+        }.to_json
+
+        http_response = ::OpenStruct.new code: 200, body: body
+        response = Response.new(http_response)
+
+        expect(response.raw_text).to eq 'raw text'
+      end
+
+    end
+    
     describe 'entailments' do
 
       let(:http_response) { ::OpenStruct.new(code: 200, body: body) }
@@ -483,7 +506,7 @@ module TextRazor
           }.to_json
         end
 
-        it "should return words" do
+        it "returns words" do
           words = response.words
 
           expect(words).to_not be_nil
@@ -505,7 +528,7 @@ module TextRazor
           }.to_json
         end
 
-        it "should return nil" do
+        it "returns nil" do
           expect(response.words).to be_nil
         end
 
@@ -513,6 +536,222 @@ module TextRazor
 
     end
 
+    describe '#properties' do
+
+      let(:http_response) do
+        ::OpenStruct.new(code: 200, body: body)
+      end
+
+      let(:response) do
+        Response.new(http_response)
+      end
+
+      context 'if there are properties' do
+
+        let(:body) do
+          {
+            "time" => "0.013219",
+            "response" => {
+              "language" => "eng",
+              "languageIsReliable"=>true,
+              "properties" => [
+                {
+                  "id" => 0,
+                  "wordPositions" => [9,10,12],
+                  "propertyPositions" => [12]
+                } 
+              ]
+            }
+          }.to_json
+        end
+
+        it 'returns properties' do
+          properties = response.properties
+
+          expect(properties).to_not be_nil
+          expect(properties.size).to eq(1)
+          expect(properties.first).to be_instance_of(Property)
+        end
+
+      end
+
+      context 'if there are no properties returned' do
+
+        let(:body) do
+          {
+            "time" => "0.013219",
+            "response" => {
+              "language" => "eng",
+              "languageIsReliable"=>true
+            }
+          }.to_json
+        end
+
+        it 'returns nil' do
+          expect(response.properties).to be_nil
+        end
+
+      end
+
+    end
+
+    describe '#relations' do
+
+      context 'if there are relations returned' do
+
+        let(:body) do
+          {
+            "time" => "0.013219",
+            "response" => {
+              "language" => "eng",
+              "languageIsReliable"=>true,
+              "relations" => [{ 
+                  id: 0,
+                  wordPositions: [1, 6],
+                  params: [{
+                    relation: "SUBJECT",
+                    wordPositions: [18, 19, 20, 21] 
+                  }, 
+                  {
+                    relation: "OBJECT", 
+                    wordPositions: [2, 3, 4, 5, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16]
+                  }]
+              }]
+            }
+          }.to_json
+        end
+               
+        it 'returns relations' do
+          relations = response.relations
+
+          expect(relations).to_not be_nil
+          expect(relations.size).to eq(1)
+          expect(relations.first).to be_instance_of(Relation)
+        end
+
+      end
+
+      context 'if there are no relations returned' do
+
+         let(:body) do
+          {
+            "time" => "0.013219",
+            "response" => {
+              "language" => "eng",
+              "languageIsReliable"=>true
+            }
+          }.to_json
+        end
+        
+        it 'returns nil' do
+          expect(response.relations).to be_nil
+        end
+      end
+    end
+
+    describe '#sentences' do
+
+      context 'if there are sentences returned' do
+
+        let(:body) do
+          {
+            "time" => "0.013219",
+            "response" => {
+              "language" => "eng",
+              "languageIsReliable"=>true,
+              "sentences" => [{
+                :position=>0,
+                :words=>
+                 [{
+                   :position=>0,
+                   :startingPos=>0,
+                   :endingPos=>8,
+                   :stem=>"barclay",
+                   :lemma=>"barclay",
+                   :token=>"Barclays",
+                   :partOfSpeech=>"NNP",
+                   :parentPosition=>1,
+                   :relationToParent=>"nsubj"
+                 }]
+              }]
+            }
+          }.to_json
+        end
+
+        it 'returns sentences' do
+          sentences = response.sentences
+
+          expect(sentences).to_not be_nil
+          expect(sentences.size).to eq(1)
+          expect(sentences.first).to be_instance_of(Sentence)
+        end
+
+      end
+
+      context 'if there are no sentences returned' do
+
+        let(:body) do
+          {
+            "time" => "0.013219",
+            "response" => {
+              "language" => "eng",
+              "languageIsReliable"=>true
+            }
+          }.to_json
+        end
+
+        it 'returns nil' do
+          expect(response.sentences).to be_nil
+        end
+
+      end
+
+    end
+
+    describe '#language' do
+
+      let(:body) do
+        {
+          "time" => "0.013219",
+          "response" => {
+            "language" => "eng",
+            "languageIsReliable"=>true
+          }
+        }.to_json
+      end
+
+      it 'returns language' do
+        expect(response.language).to eq 'eng'
+      end
+
+    end
+
+    describe '#language_is_reliable?' do
+
+      let(:body) do
+        {
+          "time" => "0.013219",
+          "response" => {
+            "language" => "eng",
+            "languageIsReliable"=>true
+          }
+        }.to_json
+      end
+
+      let(:http_response) do
+        ::OpenStruct.new(code: 200, body: body)
+      end
+
+      let(:response) do
+        Response.new(http_response)
+      end
+
+      it 'returns language_is_reliable?' do
+        expect(response).to be_language_is_reliable
+      end
+
+    end
+    
   end
 
 end

@@ -74,7 +74,7 @@ TextRazor.phrases('api_key', 'text')
 Only implemented this for topics, entities, words and phrases. Also, implement
 it for other information that we can retrieve from the public API.
 
-### API Issues
+### API Issues (To investigate)
 
 #### Response
 
@@ -83,6 +83,14 @@ it for other information that we can retrieve from the public API.
 Missing from the successful response.
 
 * message - Any warning or informational messages returned from the server, or an empty string if there was no message.
+
+Missing from the successful response.
+
+* cleanedText
+
+Missing from the successful response.
+
+* customAnnotationOutput
 
 Missing from the successful response.
 

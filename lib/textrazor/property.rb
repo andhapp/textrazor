@@ -1,14 +1,12 @@
 module TextRazor
 
-  class Entailment
+  class Property
 
     extend Util
 
-    attr_reader :id, :word_positions, :prior_score, :context_score,
-                :score, :entailed_tree, :entailed_words
- 
+    attr_reader :id, :word_positions, :property_positions
+
     def initialize(params = {})
-      @type = []
       params.each do |k, v|
         instance_variable_set(:"@#{k}", v) if v && self.respond_to?(:"#{k}")
       end
