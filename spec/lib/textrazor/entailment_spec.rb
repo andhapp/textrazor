@@ -6,9 +6,9 @@ module TextRazor
 
     context "#create_from_hash" do
 
-      let(:entailment_hash) { 
+      let(:entailment_hash) {
         {
-          :id=>2, :wordPositions=>[1], :entailedWords=>["misrepresentation"], 
+          :id=>2, :wordPositions=>[1], :entailedWords=>["misrepresentation"],
           :entailedTree=>{
             :word=>"misrepresentation", :wordId=>0, :parentRelation=>-1
           },

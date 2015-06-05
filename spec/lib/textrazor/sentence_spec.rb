@@ -30,7 +30,7 @@ module TextRazor
       it "should create a new instance" do
         expect(sentence.position).to eq(0)
         expect(sentence.number_of_words).to eq(1)
-        expect(sentence.words.first).to be_instance_of(Word) 
+        expect(sentence.words.first).to be_instance_of(Word)
       end
 
     end

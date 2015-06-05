@@ -1,6 +1,6 @@
 module TextRazor
 
-  class Sentence 
+  class Sentence
 
     attr_reader :position, :words
 
@@ -14,11 +14,11 @@ module TextRazor
     def number_of_words
       @words.size
     end
-    
+
     def self.create_from_hash(params)
       new(params)
     end
-    
+
   end
 
 end

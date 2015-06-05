@@ -6,7 +6,7 @@ module TextRazor
 
     attr_reader :id, :word_positions, :prior_score, :context_score,
                 :score, :entailed_tree, :entailed_words
- 
+
     def initialize(params = {})
       @type = []
       params.each do |k, v|

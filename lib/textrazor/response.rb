@@ -9,7 +9,7 @@ module TextRazor
     RequestEntityTooLong = Class.new(StandardError)
 
     attr_reader :raw_response, :time
-      
+
     def initialize(http_response)
       code = http_response.code
       body = http_response.body
@@ -37,19 +37,19 @@ module TextRazor
     #end
 
     def custom_annotation_output
-      @custom_annotation_output ||= raw_response[:customAnnotationOutput] 
+      @custom_annotation_output ||= raw_response[:customAnnotationOutput]
     end
 
     def cleaned_text
-      @cleaned_text ||= raw_response[:cleanedText]      
+      @cleaned_text ||= raw_response[:cleanedText]
     end
 
     def raw_text
-      @raw_text||= raw_response[:rawText]      
+      @raw_text||= raw_response[:rawText]
     end
 
     def entailments
-      @entailments ||= parse_entailments 
+      @entailments ||= parse_entailments
     end
 
     def entities
@@ -57,15 +57,15 @@ module TextRazor
     end
 
     def coarse_topics
-      @coarse_topics ||= parse_coarse_topics 
+      @coarse_topics ||= parse_coarse_topics
     end
 
     def topics
-      @topics ||= parse_topics 
+      @topics ||= parse_topics
     end
 
     def phrases
-      @phrases ||= parse_phrases 
+      @phrases ||= parse_phrases
     end
 
     def words
@@ -73,7 +73,7 @@ module TextRazor
     end
 
     def properties
-      @properties ||= parse_properties 
+      @properties ||= parse_properties
     end
 
     def relations
@@ -91,7 +91,7 @@ module TextRazor
     def language_is_reliable?
       raw_response[:languageIsReliable]
     end
-    
+
     private
 
     def bad_request?(code)
@@ -121,7 +121,7 @@ module TextRazor
     def parse_topics
       parse(:topic, raw_response[:topics])
     end
-   
+
     def parse_phrases
       raw_phrases = raw_response[:nounPhrases]
       return if raw_phrases.nil?
@@ -155,7 +155,7 @@ module TextRazor
     def parse_sentences
       parse(:sentence, raw_response[:sentences])
     end
-    
+
     def parse(type, data)
       return nil if data.nil?
 

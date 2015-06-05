@@ -11,10 +11,10 @@ module TextRazor
           wordPositions: [1, 6],
           params: [{
             relation: "SUBJECT",
-            wordPositions: [18, 19, 20, 21] 
-          }, 
+            wordPositions: [18, 19, 20, 21]
+          },
           {
-            relation: "OBJECT", 
+            relation: "OBJECT",
             wordPositions: [2, 3, 4, 5, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16]
           }]
         }

@@ -15,8 +15,8 @@ module TextRazor
 
     VALID_CLEANUP_MODE_VALUES = [DEFAULT_CLEANUP_MODE, 'stripTags', 'cleanHTML']
 
-    REQUEST_OPTIONS = [:extractors, :rules, :cleanup_mode, :cleanup_return_cleaned, :cleanup_return_raw, 
-                       :language, :filter_dbpedia_types, :filter_freebase_types, :allow_overlap, 
+    REQUEST_OPTIONS = [:extractors, :rules, :cleanup_mode, :cleanup_return_cleaned, :cleanup_return_raw,
+                       :language, :filter_dbpedia_types, :filter_freebase_types, :allow_overlap,
                        :enrichment_queries]
 
     attr_reader :response, :api_key, :request_options
@@ -78,14 +78,14 @@ module TextRazor
     end
 
     def assign_request_options(options)
-      extractors = options.delete(:extractors) 
+      extractors = options.delete(:extractors)
       assert_extractors(extractors)
-     
+
       cleanup_mode = options.delete(:cleanup_mode)
       assert_cleanup_mode(cleanup_mode)
 
-      @request_options = { 
-        extractors: extractors || DEFAULT_EXTRACTORS, 
+      @request_options = {
+        extractors: extractors || DEFAULT_EXTRACTORS,
         cleanup_mode: cleanup_mode || DEFAULT_CLEANUP_MODE
       }
 

@@ -4,7 +4,7 @@ module TextRazor
 
     extend Util
 
-    attr_reader :position, :starting_pos, :ending_pos, :stem, :lemma, 
+    attr_reader :position, :starting_pos, :ending_pos, :stem, :lemma,
                 :token, :part_of_speech, :parent_position
 
     def initialize(params = {})

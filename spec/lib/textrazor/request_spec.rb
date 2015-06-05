@@ -58,7 +58,7 @@ module TextRazor
 
         it "should make correct calls" do
           options = {api_key: 'api_key', extractors: %w(entities topics words), cleanup_mode: 'raw',
-                     cleanup_return_cleaned: true, cleanup_return_raw: true, language: 'fre', 
+                     cleanup_return_cleaned: true, cleanup_return_raw: true, language: 'fre',
                      filter_dbpedia_types: %w(type1), filter_freebase_types: %w(type2), allow_overlap: false,
                      enrichment_queries: 'queries'}
 

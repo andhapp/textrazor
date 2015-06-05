@@ -19,7 +19,7 @@ module TextRazor
     def self.create_from_hash(params)
       new(params)
     end
-    
+
   end
 
 end

@@ -128,7 +128,7 @@ module TextRazor
       it 'returns cleaned text' do
         body = {
           response: {
-            cleanedText: 'cleaned text' 
+            cleanedText: 'cleaned text'
           }
         }.to_json
 
@@ -139,13 +139,13 @@ module TextRazor
       end
 
     end
-   
+
     describe '#raw_text' do
 
       it 'returns raw text' do
         body = {
           response:{
-            rawText: 'raw text' 
+            rawText: 'raw text'
           }
         }.to_json
 
@@ -156,32 +156,32 @@ module TextRazor
       end
 
     end
-    
+
     describe 'entailments' do
 
       let(:http_response) { ::OpenStruct.new(code: 200, body: body) }
       let(:response) { Response.new(http_response) }
-      
+
       context 'when response has entailments' do
 
-        let(:body) { 
+        let(:body) {
           {
-            "time"=>"0.013219", 
+            "time"=>"0.013219",
             "response"=>{
-              "language"=>"eng", 
+              "language"=>"eng",
               "languageIsReliable"=>true,
               "entailments"=>[{
-                "id"=>2, "wordPositions"=>[1], 
-                "entailedWords"=>["misrepresentation"], 
+                "id"=>2, "wordPositions"=>[1],
+                "entailedWords"=>["misrepresentation"],
                 "entailedTree"=>{
                   "word"=>"misrepresentation", "wordId"=>0, "parentRelation"=>-1
                 },
-                "priorScore"=>0.00132419, 
-                "contextScore"=>0.0694058, 
+                "priorScore"=>0.00132419,
+                "contextScore"=>0.0694058,
                 "score"=>0.154246
               }]
             }
-          }.to_json 
+          }.to_json
         }
 
         it 'returns entailments' do
@@ -195,13 +195,13 @@ module TextRazor
 
       context  'when response does not have entailments' do
 
-        let(:body) { 
+        let(:body) {
           {
-            "time"=>"0.013219", 
+            "time"=>"0.013219",
             "response"=>{
               "language"=>"eng", "languageIsReliable"=>true
             }
-          }.to_json 
+          }.to_json
         }
 
         it 'returns nil' do
@@ -559,7 +559,7 @@ module TextRazor
                   "id" => 0,
                   "wordPositions" => [9,10,12],
                   "propertyPositions" => [12]
-                } 
+                }
               ]
             }
           }.to_json
@@ -605,22 +605,22 @@ module TextRazor
             "response" => {
               "language" => "eng",
               "languageIsReliable"=>true,
-              "relations" => [{ 
+              "relations" => [{
                   id: 0,
                   wordPositions: [1, 6],
                   params: [{
                     relation: "SUBJECT",
-                    wordPositions: [18, 19, 20, 21] 
-                  }, 
+                    wordPositions: [18, 19, 20, 21]
+                  },
                   {
-                    relation: "OBJECT", 
+                    relation: "OBJECT",
                     wordPositions: [2, 3, 4, 5, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16]
                   }]
               }]
             }
           }.to_json
         end
-               
+
         it 'returns relations' do
           relations = response.relations
 
@@ -642,7 +642,7 @@ module TextRazor
             }
           }.to_json
         end
-        
+
         it 'returns nil' do
           expect(response.relations).to be_nil
         end
@@ -751,7 +751,7 @@ module TextRazor
       end
 
     end
-    
+
   end
 
 end
