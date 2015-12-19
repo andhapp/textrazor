@@ -2,6 +2,10 @@
 
 This is a gem wrapper for TextRazor REST API reference.
 
+## Code status
+
+[![Build Status](https://travis-ci.org/andhapp/textrazor.svg?branch=master)](https://travis-ci.org/andhapp/textrazor)
+
 ## Installation
 
 Add this line to your application's Gemfile:
