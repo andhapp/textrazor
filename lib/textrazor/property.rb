@@ -1,14 +1,12 @@
 module TextRazor
 
-  class Word
+  class Property
 
     extend Util
 
-    attr_reader :position, :starting_pos, :ending_pos, :stem, :lemma,
-                :token, :part_of_speech, :parent_position
+    attr_reader :id, :word_positions, :property_positions
 
     def initialize(params = {})
-      @type = []
       params.each do |k, v|
         instance_variable_set(:"@#{k}", v) if v && self.respond_to?(:"#{k}")
       end

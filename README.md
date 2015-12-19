@@ -4,8 +4,6 @@ This is a gem wrapper for TextRazor REST API reference.
 
 ## Installation
 
-
-
 Add this line to your application's Gemfile:
 
     gem 'textrazor', :git => 'git://github.com/andhapp/textrazor.git'
@@ -75,6 +73,32 @@ TextRazor.phrases('api_key', 'text')
 
 Only implemented this for topics, entities, words and phrases. Also, implement
 it for other information that we can retrieve from the public API.
+
+### API Issues (To investigate)
+
+#### Response
+
+* error - Descriptive error message of any problems that may have occurred during analysis, or an empty string if there was no error.
+
+Missing from the successful response.
+
+* message - Any warning or informational messages returned from the server, or an empty string if there was no message.
+
+Missing from the successful response.
+
+* cleanedText
+
+Missing from the successful response.
+
+* customAnnotationOutput
+
+Missing from the successful response.
+
+### Specs
+
+#### Prolog rules
+
+Specs around custom prolog rules need to be added.
 
 
 ## Contributing

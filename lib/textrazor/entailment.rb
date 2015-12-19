@@ -1,11 +1,11 @@
 module TextRazor
 
-  class Word
+  class Entailment
 
     extend Util
 
-    attr_reader :position, :starting_pos, :ending_pos, :stem, :lemma,
-                :token, :part_of_speech, :parent_position
+    attr_reader :id, :word_positions, :prior_score, :context_score,
+                :score, :entailed_tree, :entailed_words
 
     def initialize(params = {})
       @type = []

@@ -5,14 +5,23 @@ module TextRazor
     EmptyApiKey = Class.new(StandardError)
     EmptyText = Class.new(StandardError)
     TextTooLong = Class.new(StandardError)
+    UnsupportedExtractor = Class.new(StandardError)
+    UnsupportedCleanupMode = Class.new(StandardError)
 
     DEFAULT_EXTRACTORS = ['entities', 'topics', 'words', 'phrases', 'dependency-trees',
                           'relations', 'entailments', 'senses']
 
-    REQUEST_OPTIONS = [:extractors, :cleanup_html, :language, 
-                       :filter_dbpedia_types, :filter_freebase_types]
+    DEFAULT_CLEANUP_MODE = 'raw'
+
+    VALID_CLEANUP_MODE_VALUES = [DEFAULT_CLEANUP_MODE, 'stripTags', 'cleanHTML']
+
+    REQUEST_OPTIONS = [:extractors, :rules, :cleanup_mode, :cleanup_return_cleaned, :cleanup_return_raw,
+                       :language, :filter_dbpedia_types, :filter_freebase_types, :allow_overlap,
+                       :enrichment_queries]
 
     attr_reader :response, :api_key, :request_options
+
+    private_constant :DEFAULT_EXTRACTORS, :VALID_CLEANUP_MODE_VALUES, :DEFAULT_CLEANUP_MODE, :REQUEST_OPTIONS
 
     def initialize(api_key, options = {})
       assign_api_key(api_key)
@@ -21,7 +30,9 @@ module TextRazor
 
     def analyse(text)
       assert_text(text)
-      options = {api_key: api_key}.merge(request_options)
+      options = {
+        api_key: api_key
+      }.merge(request_options)
 
       Response.new(Request.post(text, options))
     end
@@ -67,9 +78,31 @@ module TextRazor
     end
 
     def assign_request_options(options)
-      @request_options = { extractors: DEFAULT_EXTRACTORS }
+      extractors = options.delete(:extractors)
+      assert_extractors(extractors)
+
+      cleanup_mode = options.delete(:cleanup_mode)
+      assert_cleanup_mode(cleanup_mode)
+
+      @request_options = {
+        extractors: extractors || DEFAULT_EXTRACTORS,
+        cleanup_mode: cleanup_mode || DEFAULT_CLEANUP_MODE
+      }
+
       REQUEST_OPTIONS.each do |key|
-        @request_options[key] = options[key] if options[key]
+        @request_options[key] = options[key] unless options[key].nil?
+      end
+    end
+
+    def assert_extractors(extractors)
+      if extractors && !extractors.all? { |extractor| DEFAULT_EXTRACTORS.include?(extractor) }
+        raise UnsupportedExtractor.new('Unsupported extractor')
+      end
+    end
+
+    def assert_cleanup_mode(cleanup_mode)
+      if cleanup_mode && !VALID_CLEANUP_MODE_VALUES.include?(cleanup_mode)
+        raise UnsupportedCleanupMode.new('Unsupported clean up mode')
       end
     end
 

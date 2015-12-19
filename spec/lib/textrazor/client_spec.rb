@@ -4,55 +4,103 @@ module TextRazor
 
   describe Client do
 
-    let(:api_key) { 'api_key' }
-    let(:client) { custom_options_client }
-    let(:nil_api_key_client) { Client.new(nil) }
-    let(:empty_api_key_client) { Client.new('') }
-    let(:custom_options_client) { Client.new(api_key, {extractors: %w(entities topics words),
-                                    cleanup_html: true, filter_dbpedia_types: %w(type1),
-                                    language: 'fre',
-                                    filter_freebase_types: %w(type2)}) }
-    let(:default_options_client) { Client.new(api_key) }
+    let(:api_key) do
+     'api_key'
+    end
 
-    context "#initialize" do
+    let(:client) do
+      custom_options_client
+    end
 
-      context "valid parameters" do
+    let(:nil_api_key_client) do
+      Client.new(nil)
+    end
 
-        it "should assign correct api_key, text and default options" do
-          expect(default_options_client.api_key).to eq(api_key)
-          expect(default_options_client.request_options).
-            to eq({extractors: %w(entities topics words phrases dependency-trees relations entailments senses)})
+    let(:empty_api_key_client) do
+      Client.new('')
+    end
+
+    let(:custom_options_client) do
+      Client.new(api_key, {
+        extractors: %w(entities topics words), cleanup_mode: 'raw',
+        cleanup_return_cleaned: true, cleanup_return_raw: true,
+        filter_dbpedia_types: %w(type1), language: 'fre',
+        filter_freebase_types: %w(type2), allow_overlap: false
+      })
+    end
+
+    let(:default_options_client) do
+      Client.new(api_key)
+    end
+
+    describe "#initialize" do
+
+      context 'with valid api key' do
+
+        context "and default request options" do
+
+          it 'assigns correctly' do
+            expect(default_options_client.api_key).to eq(api_key)
+            expect(default_options_client.request_options).
+              to eq({extractors: %w(entities topics words phrases dependency-trees
+                     relations entailments senses), cleanup_mode: 'raw'})
+          end
+
         end
 
-        it "should assign correct api_key, text and passed in options" do
-          expect(custom_options_client.api_key).to eq(api_key)
-          expect(custom_options_client.request_options).
-            to eq({extractors: %w(entities topics words), cleanup_html: true, language: 'fre',
-                   filter_dbpedia_types: %w(type1), filter_freebase_types: %w(type2)})
+        context 'and custom request options' do
+
+          it "assigns correctly" do
+            expect(custom_options_client.api_key).to eq(api_key)
+            expect(custom_options_client.request_options).
+              to eq({extractors: %w(entities topics words), cleanup_mode: 'raw', language: 'fre',
+                     cleanup_return_cleaned: true, cleanup_return_raw: true,
+                     filter_dbpedia_types: %w(type1), filter_freebase_types: %w(type2),
+                     allow_overlap: false})
+          end
+
         end
 
       end
 
-      context "invalid parameters" do
+      context "with invalid api key" do
 
-        context "api_key" do
+        context "when nil" do
 
-          context "is nil" do
-
-            it "should raise an exception" do
-              expect { nil_api_key_client }.
-                to raise_error(Client::EmptyApiKey)
-            end
-
+          it "raises an exception" do
+            expect { nil_api_key_client }.
+              to raise_error(Client::EmptyApiKey)
           end
 
-          context "is empty" do
+        end
 
-            it "should raise an exception" do
-              expect { empty_api_key_client }.
-                to raise_error(Client::EmptyApiKey)
-            end
+        context "when empty" do
 
+          it "raises an exception" do
+            expect { empty_api_key_client }.
+              to raise_error(Client::EmptyApiKey)
+          end
+
+        end
+
+      end
+
+      context 'with invalid request options' do
+
+        context 'when an invalid extractor value is supplied' do
+
+          it 'raises an exception' do
+            expect { Client.new(api_key, {extractors: ['invalid-extractor', 'topics']}) }.
+              to raise_error(Client::UnsupportedExtractor)
+          end
+
+        end
+
+        context 'when an invalid cleanup_mode value is supplied' do
+
+          it 'raises an exception' do
+            expect { Client.new(api_key, {cleanup_mode: 'invalid-cleanup-mode'}) }.
+              to raise_error(Client::UnsupportedCleanupMode)
           end
 
         end
@@ -63,16 +111,20 @@ module TextRazor
 
     context "#analyse" do
 
-      let(:very_long_text) { "L" * 201 * 1024 }
+      let(:very_long_text) do
+        "L" * 201 * 1024
+      end
 
-      context "valid parameters" do
+      context "valid value of 'text'" do
 
-        it "should make correct calls" do
-          request = Object.new
+        it "makes correct calls" do
+          request = BasicObject.new
 
           expect(Request).to receive(:post).
-            with('text', {api_key: 'api_key', extractors: %w(entities topics words), cleanup_html: true,
-                          language: 'fre', filter_dbpedia_types: %w(type1), filter_freebase_types: %w(type2)}).
+            with('text', {api_key: 'api_key', extractors: %w(entities topics words), cleanup_mode: 'raw',
+                          cleanup_return_cleaned: true, cleanup_return_raw: true, language: 'fre',
+                          filter_dbpedia_types: %w(type1), filter_freebase_types: %w(type2),
+                          allow_overlap: false}).
             and_return(request)
 
           expect(Response).to receive(:new).with(request)
@@ -82,35 +134,31 @@ module TextRazor
 
       end
 
-      context "invalid parameters" do
+      context "invalid value of 'text'" do
 
-        context "text" do
+        context "when nil" do
 
-          context "is nil" do
-
-            it "should raise an exception" do
-              expect { client.analyse(nil) }.
-                to raise_error(Client::EmptyText)
-            end
-
+          it "raises an exception" do
+            expect { client.analyse(nil) }.
+              to raise_error(Client::EmptyText)
           end
 
-          context "is empty" do
+        end
 
-            it "should raise an exception" do
-              expect { client.analyse('') }.
-                to raise_error(Client::EmptyText)
-            end
+        context "when empty" do
 
+          it "raises an exception" do
+            expect { client.analyse('') }.
+              to raise_error(Client::EmptyText)
           end
 
-          context "size is > 200kb" do
+        end
 
-            it "should raise an exception" do
-              expect { client.analyse(very_long_text) }.
-                to raise_error(Client::TextTooLong)
-            end
+        context "when size is > 200kb" do
 
+          it "raises an exception" do
+            expect { client.analyse(very_long_text) }.
+              to raise_error(Client::TextTooLong)
           end
 
         end
@@ -121,7 +169,7 @@ module TextRazor
 
     context ".topics" do
 
-      it "should make correct calls" do
+      it "makes correct calls" do
         client = OpenStruct.new
         response = OpenStruct.new topics: ['topic1'], coarseTopics: ['topic1']
 
@@ -140,7 +188,7 @@ module TextRazor
 
     context ".coarse_topics" do
 
-      it "should make correct calls" do
+      it "makes correct calls" do
         client = OpenStruct.new
         response = OpenStruct.new topics: ['topic1'], coarseTopics: ['topic1']
 
@@ -159,7 +207,7 @@ module TextRazor
 
     context ".entities" do
 
-      it "should make correct calls" do
+      it "makes correct calls" do
         client = OpenStruct.new
         response = OpenStruct.new entities: ['Entity1']
 
@@ -178,7 +226,7 @@ module TextRazor
 
     context ".words" do
 
-      it "should make correct calls" do
+      it "makes correct calls" do
         client = OpenStruct.new
         response = OpenStruct.new words: ['Word1']
 
@@ -197,7 +245,7 @@ module TextRazor
 
     context ".phrases" do
 
-      it "should make correct calls" do
+      it "makes correct calls" do
         client = OpenStruct.new
         response = OpenStruct.new phrases: ['Phrase1']
 

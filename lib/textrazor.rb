@@ -5,9 +5,14 @@ require "textrazor/client"
 require "textrazor/request"
 require "textrazor/response"
 require "textrazor/topic"
+require "textrazor/entailment"
 require "textrazor/entity"
 require "textrazor/word"
 require "textrazor/phrase"
+require "textrazor/property"
+require "textrazor/sentence"
+require "textrazor/relation_param"
+require "textrazor/relation"
 
 module TextRazor
 
