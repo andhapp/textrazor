@@ -13,6 +13,7 @@ module TextRazor
       cleanup_return_cleaned: 'cleanup.returnCleaned',
       cleanup_return_raw: 'cleanup.returnRaw',
       language: 'languageOverride',
+      dictionaries: 'entities.dictionaries',
       filter_dbpedia_types: 'entities.filterDbpediaTypes',
       filter_freebase_types: 'entities.filterFreebaseTypes',
       allow_overlap: 'entities.allowOverlap',

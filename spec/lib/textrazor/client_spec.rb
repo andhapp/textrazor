@@ -25,7 +25,8 @@ module TextRazor
         extractors: %w(entities topics words), cleanup_mode: 'raw',
         cleanup_return_cleaned: true, cleanup_return_raw: true,
         filter_dbpedia_types: %w(type1), language: 'fre',
-        filter_freebase_types: %w(type2), allow_overlap: false
+        filter_freebase_types: %w(type2), allow_overlap: false,
+        dictionaries: %w(test)
       })
     end
 
@@ -56,7 +57,7 @@ module TextRazor
               to eq({extractors: %w(entities topics words), cleanup_mode: 'raw', language: 'fre',
                      cleanup_return_cleaned: true, cleanup_return_raw: true,
                      filter_dbpedia_types: %w(type1), filter_freebase_types: %w(type2),
-                     allow_overlap: false})
+                     allow_overlap: false, dictionaries: %w(test)})
           end
 
         end
@@ -124,7 +125,7 @@ module TextRazor
             with('text', {api_key: 'api_key', extractors: %w(entities topics words), cleanup_mode: 'raw',
                           cleanup_return_cleaned: true, cleanup_return_raw: true, language: 'fre',
                           filter_dbpedia_types: %w(type1), filter_freebase_types: %w(type2),
-                          allow_overlap: false}).
+                          allow_overlap: false, dictionaries: %w(test)}).
             and_return(request)
 
           expect(Response).to receive(:new).with(request)

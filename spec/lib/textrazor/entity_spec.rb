@@ -25,7 +25,10 @@ module TextRazor
             "relevanceScore" => 0.311479,
             "entityEnglishId" => "Foreign minister",
             "startingPos" => 3,
-            "endingPos" => 20
+            "endingPos" => 20,
+            "data" => {
+              "type" => ['person', 'company']
+            }
           }
         end
 
@@ -43,6 +46,7 @@ module TextRazor
           expect(entity.entity_english_id).to eq("Foreign minister")
           expect(entity.starting_pos).to eq(3)
           expect(entity.ending_pos).to eq(20)
+          expect(entity.data['type']).to match_array(['person', 'company'])
         end
       end
 
