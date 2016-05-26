@@ -17,7 +17,7 @@ module TextRazor
 
     REQUEST_OPTIONS = [:extractors, :rules, :cleanup_mode, :cleanup_return_cleaned, :cleanup_return_raw,
                        :language, :dictionaries, :filter_dbpedia_types, :filter_freebase_types, :allow_overlap,
-                       :enrichment_queries]
+                       :enrichment_queries, :classifiers]
 
     attr_reader :response, :api_key, :request_options
 
@@ -41,6 +41,12 @@ module TextRazor
       new(api_key, options.merge(extractors: ['topics'])).
         analyse(text).
         topics
+    end
+
+    def self.categories(api_key, text, options = {})
+      new(api_key, options.merge(classifiers: ['textrazor_iab'])).
+        analyse(text).
+        categories
     end
 
     def self.coarse_topics(api_key, text, options = {})

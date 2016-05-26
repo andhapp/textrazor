@@ -23,6 +23,7 @@ module TextRazor
     let(:custom_options_client) do
       Client.new(api_key, {
         extractors: %w(entities topics words), cleanup_mode: 'raw',
+        classifiers: 'textrazor_newscodes',
         cleanup_return_cleaned: true, cleanup_return_raw: true,
         filter_dbpedia_types: %w(type1), language: 'fre',
         filter_freebase_types: %w(type2), allow_overlap: false,
@@ -57,7 +58,8 @@ module TextRazor
               to eq({extractors: %w(entities topics words), cleanup_mode: 'raw', language: 'fre',
                      cleanup_return_cleaned: true, cleanup_return_raw: true,
                      filter_dbpedia_types: %w(type1), filter_freebase_types: %w(type2),
-                     allow_overlap: false, dictionaries: %w(test)})
+                     allow_overlap: false, dictionaries: %w(test),
+                     classifiers: 'textrazor_newscodes'})
           end
 
         end
@@ -125,7 +127,7 @@ module TextRazor
             with('text', {api_key: 'api_key', extractors: %w(entities topics words), cleanup_mode: 'raw',
                           cleanup_return_cleaned: true, cleanup_return_raw: true, language: 'fre',
                           filter_dbpedia_types: %w(type1), filter_freebase_types: %w(type2),
-                          allow_overlap: false, dictionaries: %w(test)}).
+                          allow_overlap: false, dictionaries: %w(test), classifiers: 'textrazor_newscodes'}).
             and_return(request)
 
           expect(Response).to receive(:new).with(request)
@@ -259,6 +261,25 @@ module TextRazor
           and_return(response)
 
         Client.phrases(api_key, 'text', {})
+      end
+
+    end
+
+    context ".categories" do
+
+      it "makes correct calls" do
+        client = OpenStruct.new
+        response = OpenStruct.new categories: ['Category1']
+
+        expect(Client).to receive(:new).
+          with(api_key, {classifiers: ['textrazor_iab']}).
+          and_return(client)
+
+        expect(client).to receive(:analyse).
+          with("text").
+          and_return(response)
+
+        Client.categories(api_key, 'text', {})
       end
 
     end

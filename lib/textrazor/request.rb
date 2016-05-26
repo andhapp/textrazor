@@ -17,7 +17,8 @@ module TextRazor
       filter_dbpedia_types: 'entities.filterDbpediaTypes',
       filter_freebase_types: 'entities.filterFreebaseTypes',
       allow_overlap: 'entities.allowOverlap',
-      enrichment_queries: 'entities.enrichmentQueries'
+      enrichment_queries: 'entities.enrichmentQueries',
+      classifiers: 'classifiers'
     }
 
     def self.post(text, options)

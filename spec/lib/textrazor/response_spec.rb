@@ -441,6 +441,73 @@ module TextRazor
 
     end
 
+    describe "#categories" do
+
+      let(:http_response) do
+        ::OpenStruct.new(code: 200, body: body)
+      end
+
+      let(:response) do
+        Response.new(http_response)
+      end
+
+      context "if there are categories returned from api" do
+
+        let(:body) do
+          {
+            "time" => "0.013219",
+            "response" => {
+              "language" => "eng",
+              "languageIsReliable" => true,
+              "categories" => [
+                {
+                  "id" => 0,
+                  "classifierId" => "textrazor_iab",
+                  "categoryId" => "IAB11",
+                  "label" => "Law, Gov’t & Politics",
+                  "score" => 0.809611
+                },
+                {
+                  "id" => 1,
+                  "classifierId" => "textrazor_iab",
+                  "categoryId" => "IAB11-2",
+                  "label" => "Law, Gov’t & Politics>Legal Issues",
+                  "score" => 0.61239
+                }
+              ]
+            }
+          }.to_json
+        end
+
+        it "returns categories" do
+          categories = response.categories
+
+          expect(categories).to_not be_nil
+          expect(categories.size).to eq(2)
+        end
+
+      end
+
+      context "if there are no categories returned from api" do
+
+        let(:body) do
+          {
+            "time" => "0.013219",
+            "response" => {
+              "language" => "eng",
+              "languageIsReliable" => true
+            }
+          }.to_json
+        end
+
+        it "returns nil" do
+          expect(response.categories).to be_nil
+        end
+
+      end
+
+    end
+
     describe "#words" do
 
       let(:http_response) do

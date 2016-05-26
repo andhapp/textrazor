@@ -84,6 +84,10 @@ module TextRazor
        @sentences ||= parse_sentences
     end
 
+    def categories
+      @categories ||= parse_categories
+    end
+
     def language
       raw_response[:language]
     end
@@ -120,6 +124,10 @@ module TextRazor
 
     def parse_topics
       parse(:topic, raw_response[:topics])
+    end
+
+    def parse_categories
+      parse(:category, raw_response[:categories])
     end
 
     def parse_phrases
