@@ -4,7 +4,7 @@ module TextRazor
 
     extend Util
 
-    attr_reader :id, :label, :wiki_link, :score
+    attr_reader :id, :label, :wiki_link, :score, :wikidata_id
 
     def initialize(params = {})
       params.each do |k, v|

@@ -10,7 +10,8 @@ module TextRazor
           id: 1,
           label: "Sports",
           wikiLink: "link_to_wiki",
-          score: 1.03589
+          score: 1.03589,
+          wikidataId: "Q042"
         }
       end
 
@@ -23,6 +24,7 @@ module TextRazor
         expect(topic.label).to eq("Sports")
         expect(topic.wiki_link).to eq("link_to_wiki")
         expect(topic.score).to eq(1.03589)
+        expect(topic.wikidata_id).to eq("Q042")
       end
 
     end
