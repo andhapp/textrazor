@@ -5,8 +5,8 @@ module TextRazor
     attr_reader :id, :text
 
     def initialize(params, words)
-      @id    = params["id"]
-      @text  = match_words(params["wordPositions"], words)
+      @id    = params[:id]
+      @text  = match_words(params[:wordPositions], words)
     end
 
     def self.create_from_hash(params, words)
