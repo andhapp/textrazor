@@ -135,7 +135,7 @@ module TextRazor
       return if raw_phrases.nil?
 
       raw_phrases.map do |phrase_hash|
-        Phrase.create_from_hash(phrase_hash, words)
+        Phrase.new(phrase_hash, words)
       end
     end
 
