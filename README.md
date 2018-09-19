@@ -10,7 +10,7 @@ This is a gem wrapper for TextRazor REST API reference.
 
 Add this line to your application's Gemfile:
 
-    gem 'textrazor', :git => 'git://github.com/andhapp/textrazor.git'
+    gem 'textrazor'
 
 And then execute:
 
