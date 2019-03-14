@@ -95,6 +95,12 @@ client = TextRazor::Client.new('api_key')
 client.create_dictionary('my-dictionary', case_insensitive: true)
 ```
 
+#### Deleting a dctionary
+
+```
+client.delete_dictionary('my-dictionary')
+```
+
 ## Next steps
 
 Only implemented this for topics, entities, words and phrases. Also, implement

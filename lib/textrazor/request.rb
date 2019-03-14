@@ -35,6 +35,14 @@ module TextRazor
       dictionary
     end
 
+    def self.delete_dictionary(api_key, dictionary_id)
+      ::RestClient.delete(
+        url("entities/#{dictionary_id}"),
+        build_headers(api_key)
+      )
+      true
+    end
+
     def self.url(path = '/')
       File.join(TextRazor.configuration.url, path)
     end

@@ -96,6 +96,18 @@ module TextRazor
       end
     end
 
+    context ".delete_dictionary" do
+
+      it "should make correct calls" do
+        expect(::RestClient).to receive(:delete).
+          with("https://api.textrazor.com/entities/id",
+               accept_encoding: 'gzip', x_textrazor_key: 'api_key'
+              )
+
+        Request.delete_dictionary(api_key, "id")
+      end
+    end
+
   end
 
 end
