@@ -53,6 +53,10 @@ module TextRazor
       Request.create_dictionary_entries(api_key, dictionary_id, dictionary_entries)
     end
 
+    def delete_dictionary_entry(dictionary_id, dictionary_entry_id)
+      Request.delete_dictionary_entry(api_key, dictionary_id, dictionary_entry_id)
+    end
+
     def self.topics(api_key, text, options = {})
       new(api_key, options.merge(extractors: ['topics'])).
         analyse(text).

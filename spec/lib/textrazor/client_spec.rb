@@ -220,6 +220,14 @@ module TextRazor
       end
     end
 
+    context "#delete_dictionary_entry" do
+      it "make correct calls" do
+        expect(Request).to receive(:delete_dictionary_entry).
+          with(api_key, "dictionary_id", "dictionary_entry_id")
+        client.delete_dictionary_entry("dictionary_id", "dictionary_entry_id")
+      end
+    end
+
     context ".topics" do
 
       it "makes correct calls" do

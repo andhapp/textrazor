@@ -101,6 +101,13 @@ client.create_dictionary('my-dictionary', case_insensitive: true)
 client.create_dictionary_entries('my-dictionary', [{id: 'my-entry', text: 'Text to be matched'}])
 ```
 
+
+#### Deleting a dictionary entry
+
+```
+client.delete_dictionary_entry('my-dictionary', 'my-entry')
+```
+
 #### Deleting a dctionary
 
 ```
