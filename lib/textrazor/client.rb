@@ -30,11 +30,7 @@ module TextRazor
 
     def analyse(text)
       assert_text(text)
-      options = {
-        api_key: api_key
-      }.merge(request_options)
-
-      Response.new(Request.post(text, options))
+      Response.new(Request.post(api_key, text, **request_options))
     end
 
     def self.topics(api_key, text, options = {})

@@ -18,18 +18,22 @@ module TextRazor
       classifiers: 'classifiers'
     }
 
-    def self.post(text, options)
+    def self.post(api_key, text, **options)
       ::RestClient.post(
         TextRazor.configuration.url,
         build_query(text, options),
-        accept_encoding: 'gzip'
+        build_headers(api_key)
       )
+    end
+
+    def self.url(path = '/')
+      File.join(TextRazor.configuration.url, path)
     end
 
     private
 
     def self.build_query(text, options)
-      query = {"text" => text, "apiKey" => options.delete(:api_key)}
+      query = { 'text' => text }
 
       options.each do |key, value|
         value = value.join(",") if value.is_a?(Array)
@@ -37,6 +41,10 @@ module TextRazor
       end
 
       query
+    end
+
+    def self.build_headers(api_key)
+      { x_textrazor_key: api_key, accept_encoding: 'gzip' }
     end
 
   end

@@ -124,10 +124,10 @@ module TextRazor
           request = BasicObject.new
 
           expect(Request).to receive(:post).
-            with('text', {api_key: 'api_key', extractors: %w(entities topics words), cleanup_mode: 'raw',
+            with(api_key, 'text', extractors: %w(entities topics words), cleanup_mode: 'raw',
                           cleanup_return_cleaned: true, cleanup_return_raw: true, language: 'fre',
                           filter_dbpedia_types: %w(type1), filter_freebase_types: %w(type2),
-                          allow_overlap: false, dictionaries: %w(test), classifiers: 'textrazor_newscodes'}).
+                          allow_overlap: false, dictionaries: %w(test), classifiers: 'textrazor_newscodes').
             and_return(request)
 
           expect(Response).to receive(:new).with(request)
