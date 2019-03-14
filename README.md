@@ -83,6 +83,18 @@ TextRazor.phrases('api_key', 'text')
 
 ```
 
+### Dictionaries
+
+You can manage dictionaries and their entries through the dictionary API.
+
+#### Creating a dictionary
+
+```
+client = TextRazor::Client.new('api_key')
+
+client.create_dictionary('my-dictionary', case_insensitive: true)
+```
+
 ## Next steps
 
 Only implemented this for topics, entities, words and phrases. Also, implement

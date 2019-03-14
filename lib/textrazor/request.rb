@@ -26,6 +26,15 @@ module TextRazor
       )
     end
 
+    def self.create_dictionary(api_key, dictionary, **options)
+      ::RestClient.put(
+        url("/entities/#{dictionary.id}"),
+        dictionary.to_h.to_json,
+        build_headers(api_key)
+      )
+      dictionary
+    end
+
     def self.url(path = '/')
       File.join(TextRazor.configuration.url, path)
     end

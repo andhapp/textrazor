@@ -80,6 +80,22 @@ module TextRazor
 
     end
 
+    context ".create_dictionary" do
+
+      let(:dictionary) do
+        Dictionary.new(id: "id", match_type: "token", case_insensitive: true, language: "eng")
+      end
+
+      it "should make correct calls" do
+        expect(::RestClient).to receive(:put).
+          with("https://api.textrazor.com/entities/id",
+               { "matchType" => "token", "caseInsensitive" => true, "language" => "eng" }.to_json,
+               accept_encoding: 'gzip', x_textrazor_key: 'api_key')
+
+        Request.create_dictionary(api_key, dictionary)
+      end
+    end
+
   end
 
 end

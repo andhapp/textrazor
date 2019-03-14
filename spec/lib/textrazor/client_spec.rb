@@ -170,6 +170,31 @@ module TextRazor
 
     end
 
+    context "#create_dictionary" do
+
+      it "make correct calls" do
+        expect(Request).to receive(:create_dictionary).
+          with(api_key, a_kind_of(Dictionary))
+        client.create_dictionary("id")
+      end
+
+      context "with an invalid dictionary" do
+
+        it "raises an exception" do
+          expect { client.create_dictionary('') }.
+            to raise_error(Client::InvalidDictionary)
+        end
+      end
+    end
+
+    context "#delete_dictionary" do
+      it "make correct calls" do
+        expect(Request).to receive(:delete_dictionary).
+          with(api_key, "id")
+        client.delete_dictionary("id")
+      end
+    end
+
     context ".topics" do
 
       it "makes correct calls" do

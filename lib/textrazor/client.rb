@@ -8,6 +8,8 @@ module TextRazor
     UnsupportedExtractor = Class.new(StandardError)
     UnsupportedCleanupMode = Class.new(StandardError)
 
+    InvalidDictionary = Class.new(StandardError)
+
     DEFAULT_EXTRACTORS = ['entities', 'topics', 'words', 'phrases', 'dependency-trees',
                           'relations', 'entailments', 'senses']
 
@@ -31,6 +33,12 @@ module TextRazor
     def analyse(text)
       assert_text(text)
       Response.new(Request.post(api_key, text, **request_options))
+    end
+
+    def create_dictionary(id, **options)
+      dictionary = Dictionary.new(id: id, **options)
+      assert_dictionary(dictionary)
+      Request.create_dictionary(api_key, dictionary)
     end
 
     def self.topics(api_key, text, options = {})
@@ -120,6 +128,10 @@ module TextRazor
 
     def is_text_bigger_than_200_kb?(text)
       text.bytesize/1024.0 > 200
+    end
+
+    def assert_dictionary(dictionary)
+      raise InvalidDictionary, "Dictionary is invalid" unless dictionary.valid?
     end
 
   end
