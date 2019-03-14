@@ -9,6 +9,7 @@ module TextRazor
     UnsupportedCleanupMode = Class.new(StandardError)
 
     InvalidDictionary = Class.new(StandardError)
+    InvalidDictionaryEntry = Class.new(StandardError)
 
     DEFAULT_EXTRACTORS = ['entities', 'topics', 'words', 'phrases', 'dependency-trees',
                           'relations', 'entailments', 'senses']
@@ -43,6 +44,13 @@ module TextRazor
 
     def delete_dictionary(dictionary_id)
       Request.delete_dictionary(api_key, dictionary_id)
+    end
+
+    def create_dictionary_entries(dictionary_id, dictionary_entry_hashes)
+      dictionary_entries = dictionary_entry_hashes.map do |entry_hash|
+        DictionaryEntry.new(entry_hash).tap { |e| assert_dictionary_entry(e) }
+      end
+      Request.create_dictionary_entries(api_key, dictionary_id, dictionary_entries)
     end
 
     def self.topics(api_key, text, options = {})
@@ -136,6 +144,10 @@ module TextRazor
 
     def assert_dictionary(dictionary)
       raise InvalidDictionary, "Dictionary is invalid" unless dictionary.valid?
+    end
+
+    def assert_dictionary_entry(entry)
+      raise InvalidDictionaryEntry, "Entry is invalid" unless entry.valid?
     end
 
   end

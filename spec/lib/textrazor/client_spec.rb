@@ -195,6 +195,31 @@ module TextRazor
       end
     end
 
+    context "#create_dictionary_entries" do
+
+      let(:dictionary_entries_hash) do
+        [{text: "text"}]
+      end
+
+      it "make correct calls" do
+        expect(Request).to receive(:create_dictionary_entries).
+          with(api_key, "dictionary_id", all(a_kind_of(DictionaryEntry)))
+        client.create_dictionary_entries("dictionary_id", dictionary_entries_hash)
+      end
+
+      context "with an invalid dictionary" do
+
+      let(:dictionary_entries_hash) do
+        [{ text: '' }]
+      end
+
+        it "raises an exception" do
+          expect { client.create_dictionary_entries("dictionary_id", dictionary_entries_hash) }.
+            to raise_error(Client::InvalidDictionaryEntry)
+        end
+      end
+    end
+
     context ".topics" do
 
       it "makes correct calls" do

@@ -108,6 +108,22 @@ module TextRazor
       end
     end
 
+    context ".create_dictionary_entries" do
+
+      let(:dictionary_entries) do
+        [DictionaryEntry.new(id: "id", text: "text", data: {key: ["value1", "value2"]})]
+      end
+
+      it "should make correct calls" do
+        expect(::RestClient).to receive(:post).
+          with("https://api.textrazor.com/entities/dictionary_id/",
+               [{ "id" => "id", "text" => "text", "data" => { "key" => ["value1", "value2"] }}].to_json,
+               accept_encoding: 'gzip', x_textrazor_key: 'api_key')
+
+        Request.create_dictionary_entries(api_key, "dictionary_id", dictionary_entries)
+      end
+    end
+
   end
 
 end

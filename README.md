@@ -95,6 +95,12 @@ client = TextRazor::Client.new('api_key')
 client.create_dictionary('my-dictionary', case_insensitive: true)
 ```
 
+#### Adding entries to a dictionary
+
+```
+client.create_dictionary_entries('my-dictionary', [{id: 'my-entry', text: 'Text to be matched'}])
+```
+
 #### Deleting a dctionary
 
 ```
