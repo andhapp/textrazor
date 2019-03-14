@@ -96,6 +96,17 @@ module TextRazor
       end
     end
 
+    context ".get_dictionary_entries" do
+
+      it "should make correct calls" do
+        expect(::RestClient).to receive(:get).
+          with("https://api.textrazor.com/entities/id/_all?limit=10&offset=20",
+               accept_encoding: 'gzip', x_textrazor_key: 'api_key')
+
+        Request.get_dictionary_entries(api_key, 'id', limit: 10, offset: 20)
+      end
+    end
+
     context ".delete_dictionary" do
 
       it "should make correct calls" do

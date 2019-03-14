@@ -101,6 +101,14 @@ client.create_dictionary('my-dictionary', case_insensitive: true)
 client.create_dictionary_entries('my-dictionary', [{id: 'my-entry', text: 'Text to be matched'}])
 ```
 
+#### Getting entries from a dictionary
+
+```
+client.get_dictionary_entries('my-dictionary')
+
+# Using pagination
+client.get_dictionary_entries('my-dictionary', limit: 20, offset: 0)
+```
 
 #### Deleting a dictionary entry
 

@@ -42,6 +42,14 @@ module TextRazor
       Request.create_dictionary(api_key, dictionary)
     end
 
+    def get_dictionary_entries(dictionary_id, limit: 0, offset: 0)
+      response = ApiResponse.new(
+        Request.get_dictionary_entries(api_key, dictionary_id, limit: limit, offset: offset)
+      )
+      return [] unless response.raw_response.key?(:entries)
+      response.raw_response[:entries].map { |hash| DictionaryEntry.create_from_hash(hash) }
+    end
+
     def delete_dictionary(dictionary_id)
       Request.delete_dictionary(api_key, dictionary_id)
     end

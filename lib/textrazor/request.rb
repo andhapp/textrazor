@@ -35,6 +35,13 @@ module TextRazor
       dictionary
     end
 
+    def self.get_dictionary_entries(api_key, dictionary_id, limit:, offset:)
+      ::RestClient.get(
+        url("entities/#{dictionary_id}/_all?limit=#{limit}&offset=#{offset}"),
+        build_headers(api_key)
+      )
+    end
+
     def self.delete_dictionary(api_key, dictionary_id)
       ::RestClient.delete(
         url("entities/#{dictionary_id}"),
