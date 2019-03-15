@@ -34,6 +34,16 @@ TextRazor.configure do |config|
 end
 ```
 
+You can also force TextRazor to use the European API endpoint if your account
+supports it. You can find more information about this feature in [this blog
+post](https://www.textrazor.com/blog/2018/11/new-region-textrazor-eu.html).
+
+```
+TextRazor.configure do |config|
+  config.use_europe_endpoint = true
+end
+```
+
 ### When the client is persisted across different requests
 
 ```
