@@ -8,3 +8,6 @@ before_install:
 script:
   - bundle exec rake spec
   - ./scripts/travis/run-functional-test.sh
+branches:
+  only:
+  - master
