@@ -13,7 +13,7 @@ module TextRazor
 
           expect(::RestClient).to receive(:post).
             with("https://api.textrazor.com", { "text" => 'text', "apiKey" => 'api_key',
-            "extractors" => "entities,topics,words,dependency-trees,relations,entailments" }, accept_encoding: 'gzip')
+            "extractors" => "entities,topics,words,dependency-trees,relations,entailments" })
 
           Request.post('text', options)
         end
@@ -32,8 +32,7 @@ module TextRazor
             with("https://api.textrazor.com", { "text" => 'text', "apiKey" => 'api_key', "extractors" => "entities,topics,words",
             "cleanup.mode" => "raw", "cleanup.returnCleaned" => true, "cleanup.returnRaw" => true, "languageOverride" => 'fre',
             "entities.filterDbpediaTypes" => "type1", "entities.filterFreebaseTypes" => "type2" , "entities.allowOverlap" => false,
-            "entities.enrichmentQueries" => "queries", "classifiers" => 'textrazor_iab'},
-             accept_encoding: 'gzip')
+            "entities.enrichmentQueries" => "queries", "classifiers" => 'textrazor_iab'})
 
           Request.post('text', options)
         end

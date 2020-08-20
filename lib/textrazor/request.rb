@@ -21,8 +21,7 @@ module TextRazor
     def self.post(text, options)
       ::RestClient.post(
         TextRazor.configuration.url,
-        build_query(text, options),
-        accept_encoding: 'gzip'
+        build_query(text, options)
       )
     end
 
