@@ -85,7 +85,7 @@ module TextRazor
     end
 
     def self.build_headers(api_key)
-      { x_textrazor_key: api_key, accept_encoding: 'gzip' }
+      { x_textrazor_key: api_key }
     end
 
   end

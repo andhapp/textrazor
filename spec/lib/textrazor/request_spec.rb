@@ -51,7 +51,7 @@ module TextRazor
 
           expect(::RestClient).to receive(:post).
             with("https://api.textrazor.com", { "text" => 'text',
-                                                 "extractors" => "entities,topics,words,dependency-trees,relations,entailments" }, accept_encoding: 'gzip', x_textrazor_key: 'api_key')
+                                                 "extractors" => "entities,topics,words,dependency-trees,relations,entailments" }, x_textrazor_key: 'api_key')
 
           Request.post(api_key, 'text', **options)
         end
@@ -71,7 +71,7 @@ module TextRazor
                                                  "cleanup.mode" => "raw", "cleanup.returnCleaned" => true, "cleanup.returnRaw" => true, "languageOverride" => 'fre',
                                                  "entities.filterDbpediaTypes" => "type1", "entities.filterFreebaseTypes" => "type2" , "entities.allowOverlap" => false,
                                                  "entities.enrichmentQueries" => "queries", "classifiers" => 'textrazor_iab'},
-                                                 accept_encoding: 'gzip', x_textrazor_key: 'api_key')
+                                                 x_textrazor_key: 'api_key')
 
           Request.post(api_key, 'text', options)
         end
@@ -90,7 +90,7 @@ module TextRazor
         expect(::RestClient).to receive(:put).
           with("https://api.textrazor.com/entities/id",
                { "matchType" => "token", "caseInsensitive" => true, "language" => "eng" }.to_json,
-               accept_encoding: 'gzip', x_textrazor_key: 'api_key')
+               x_textrazor_key: 'api_key')
 
         Request.create_dictionary(api_key, dictionary)
       end
@@ -101,7 +101,7 @@ module TextRazor
       it "should make correct calls" do
         expect(::RestClient).to receive(:get).
           with("https://api.textrazor.com/entities/id/_all?limit=10&offset=20",
-               accept_encoding: 'gzip', x_textrazor_key: 'api_key')
+               x_textrazor_key: 'api_key')
 
         Request.get_dictionary_entries(api_key, 'id', limit: 10, offset: 20)
       end
@@ -112,7 +112,7 @@ module TextRazor
       it "should make correct calls" do
         expect(::RestClient).to receive(:delete).
           with("https://api.textrazor.com/entities/id",
-               accept_encoding: 'gzip', x_textrazor_key: 'api_key'
+               x_textrazor_key: 'api_key'
               )
 
         Request.delete_dictionary(api_key, "id")
@@ -129,7 +129,7 @@ module TextRazor
         expect(::RestClient).to receive(:post).
           with("https://api.textrazor.com/entities/dictionary_id/",
                [{ "id" => "id", "text" => "text", "data" => { "key" => ["value1", "value2"] }}].to_json,
-               accept_encoding: 'gzip', x_textrazor_key: 'api_key')
+               x_textrazor_key: 'api_key')
 
         Request.create_dictionary_entries(api_key, "dictionary_id", dictionary_entries)
       end
@@ -140,7 +140,7 @@ module TextRazor
       it "should make correct calls" do
         expect(::RestClient).to receive(:delete).
           with("https://api.textrazor.com/entities/dictionary_id/dictionary_entry_id",
-               accept_encoding: 'gzip', x_textrazor_key: 'api_key'
+               x_textrazor_key: 'api_key'
               )
 
         Request.delete_dictionary_entry(api_key, "dictionary_id", "dictionary_entry_id")
