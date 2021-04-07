@@ -124,10 +124,10 @@ module TextRazor
           request = BasicObject.new
 
           expect(Request).to receive(:post).
-            with('text', {api_key: 'api_key', extractors: %w(entities topics words), cleanup_mode: 'raw',
+            with(api_key, 'text', extractors: %w(entities topics words), cleanup_mode: 'raw',
                           cleanup_return_cleaned: true, cleanup_return_raw: true, language: 'fre',
                           filter_dbpedia_types: %w(type1), filter_freebase_types: %w(type2),
-                          allow_overlap: false, dictionaries: %w(test), classifiers: 'textrazor_newscodes'}).
+                          allow_overlap: false, dictionaries: %w(test), classifiers: 'textrazor_newscodes').
             and_return(request)
 
           expect(Response).to receive(:new).with(request)
@@ -168,6 +168,64 @@ module TextRazor
 
       end
 
+    end
+
+    context "#create_dictionary" do
+
+      it "make correct calls" do
+        expect(Request).to receive(:create_dictionary).
+          with(api_key, a_kind_of(Dictionary))
+        client.create_dictionary("id")
+      end
+
+      context "with an invalid dictionary" do
+
+        it "raises an exception" do
+          expect { client.create_dictionary('') }.
+            to raise_error(Client::InvalidDictionary)
+        end
+      end
+    end
+
+    context "#delete_dictionary" do
+      it "make correct calls" do
+        expect(Request).to receive(:delete_dictionary).
+          with(api_key, "id")
+        client.delete_dictionary("id")
+      end
+    end
+
+    context "#create_dictionary_entries" do
+
+      let(:dictionary_entries_hash) do
+        [{text: "text"}]
+      end
+
+      it "make correct calls" do
+        expect(Request).to receive(:create_dictionary_entries).
+          with(api_key, "dictionary_id", all(a_kind_of(DictionaryEntry)))
+        client.create_dictionary_entries("dictionary_id", dictionary_entries_hash)
+      end
+
+      context "with an invalid dictionary" do
+
+      let(:dictionary_entries_hash) do
+        [{ text: '' }]
+      end
+
+        it "raises an exception" do
+          expect { client.create_dictionary_entries("dictionary_id", dictionary_entries_hash) }.
+            to raise_error(Client::InvalidDictionaryEntry)
+        end
+      end
+    end
+
+    context "#delete_dictionary_entry" do
+      it "make correct calls" do
+        expect(Request).to receive(:delete_dictionary_entry).
+          with(api_key, "dictionary_id", "dictionary_entry_id")
+        client.delete_dictionary_entry("dictionary_id", "dictionary_entry_id")
+      end
     end
 
     context ".topics" do

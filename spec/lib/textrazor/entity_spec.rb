@@ -29,6 +29,7 @@ module TextRazor
             "data" => {
               "type" => ['person', 'company']
             },
+            "sourceId" => "some-dictionary",
             "wikidataId" => 'Q7330070'
           }
         end
@@ -48,6 +49,7 @@ module TextRazor
           expect(entity.starting_pos).to eq(3)
           expect(entity.ending_pos).to eq(20)
           expect(entity.data['type']).to match_array(['person', 'company'])
+          expect(entity.source_id).to eq("some-dictionary")
           expect(entity.wikidata_id).to eq('Q7330070')
         end
       end
